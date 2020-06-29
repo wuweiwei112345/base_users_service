@@ -1,20 +1,20 @@
 package com.users.bean.request;
 
-import java.util.Date;
-
 /**
  * @Auther: wuwei
  * @Date: 2020/6/29 17:35
- * @Description:
+ * @Description: 查询菜单数据参数实体
  */
 public class QueryMenuRequestEntity {
 
     private Integer menuId;//表记录主键id
     private String menuName;//菜单名称
     private String menuDescribe;//菜单描述
-    private Integer isDisable;//启用1禁用
-    private Date createDatetimeStart;//创建时间
-    private Date updateDatetimeEnd;//最后修改时间
+    private Integer isDisable;//0启用1禁用
+    private String createDatetimeStart;//创建时间
+    private String createDatetimeEnd;//创建时间
+    private String updateDatetimeStart;//最后修改时间
+    private String updateDatetimeEnd;//最后修改时间
 
     public Integer getMenuId() {
         return menuId;
@@ -48,19 +48,35 @@ public class QueryMenuRequestEntity {
         this.isDisable = isDisable;
     }
 
-    public Date getCreateDatetimeStart() {
+    public String getCreateDatetimeStart() {
         return createDatetimeStart;
     }
 
-    public void setCreateDatetimeStart(Date createDatetimeStart) {
+    public void setCreateDatetimeStart(String createDatetimeStart) {
         this.createDatetimeStart = createDatetimeStart;
     }
 
-    public Date getUpdateDatetimeEnd() {
+    public String getCreateDatetimeEnd() {
+        return createDatetimeEnd;
+    }
+
+    public void setCreateDatetimeEnd(String createDatetimeEnd) {
+        this.createDatetimeEnd = createDatetimeEnd;
+    }
+
+    public String getUpdateDatetimeStart() {
+        return updateDatetimeStart;
+    }
+
+    public void setUpdateDatetimeStart(String updateDatetimeStart) {
+        this.updateDatetimeStart = updateDatetimeStart;
+    }
+
+    public String getUpdateDatetimeEnd() {
         return updateDatetimeEnd;
     }
 
-    public void setUpdateDatetimeEnd(Date updateDatetimeEnd) {
+    public void setUpdateDatetimeEnd(String updateDatetimeEnd) {
         this.updateDatetimeEnd = updateDatetimeEnd;
     }
 }
