@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * @Auther: wuwei
  * @Date: 2020/6/29 15:14
- * @Description:修改权限请求实体
+ * @Description: 修改权限请求实体
  */
 public class UpdatePermissionRequestEntity {
 
