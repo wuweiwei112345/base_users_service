@@ -186,7 +186,7 @@ public class FileService {
         file.setFilePath(entity.getFilePath());//文件路径
         file.setIsDisable(entity.getIsDisable());//启用禁用
         file.setUpdateDatetime(currentDateTime);//修改时间
-        int count = fileMapper.updateByPrimaryKey(file);//执行添加
+        int count = fileMapper.updateByPrimaryKeySelective(file);//执行添加
         //返回逻辑
         if(count > 0){
             return ResponseEntity.getSuccessEntity(null);
