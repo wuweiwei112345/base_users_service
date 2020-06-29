@@ -130,7 +130,7 @@ public class PermissionService {
      * 删除权限数据根据id
      * 功能描述: 删除权限数据根据id
      * @param: Integer id 主键id
-     * @return: 权限数据集合
+     * @return: 统一响应实体
      * @auther: wuwei
      * @date: 2020/6/28 16:27
      */
