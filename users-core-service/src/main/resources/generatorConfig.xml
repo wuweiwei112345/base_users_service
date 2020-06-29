@@ -92,6 +92,18 @@
         <table tableName="permission" schema="user">
             <!--<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="false" type=""/>-->
         </table>
+        <table tableName="menu" schema="user">
+            <!--<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="false" type=""/>-->
+        </table>
+        <table tableName="oper" schema="user">
+            <!--<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="false" type=""/>-->
+        </table>
+        <table tableName="page_element" schema="user">
+            <!--<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="false" type=""/>-->
+        </table>
+        <table tableName="file" schema="user">
+            <!--<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="false" type=""/>-->
+        </table>
 
     </context>
 </generatorConfiguration>
