@@ -88,7 +88,6 @@
             <property name="rootInterface" value=""/>
 
         </javaClientGenerator>
-
         <table tableName="permission" schema="user">
             <!--<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="false" type=""/>-->
         </table>
