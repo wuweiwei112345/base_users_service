@@ -4,16 +4,12 @@ import com.tools.entity.ResponseEntity;
 import com.tools.mgutil.DateTimeUtil;
 import com.users.bean.request.AddPermissionRequestEntity;
 import com.users.bean.request.QueryPermissionRequestEntity;
+import com.users.bean.request.UpdatePermissionRequestEntity;
 import com.users.dao.mapper.PermissionMapper;
 import com.users.dao.po.Permission;
 import com.users.dao.po.PermissionExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
-import javax.annotation.Resource;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +28,6 @@ public class PermissionService {
      * 添加单个权限数据
      * 功能描述: 添加单个权限数据
      * @param: entity 单个权限数据实体
-     *      Integer permissionId;//表记录主键
      *      String permissionName;//权限名称
      *      String permissionDescribe;//权限描述
      *      Integer isDisable;//0启用1禁用
@@ -65,9 +60,9 @@ public class PermissionService {
         int count = permissionMapper.insert(permission);//执行添加
         //返回逻辑
         if(count > 0){
-            return ResponseEntity.getSuccessEntity("添加成功!");
+            return ResponseEntity.getSuccessEntity(null);
         }else{
-            return ResponseEntity.getFailEntity("添加失败!");
+            return ResponseEntity.getFailEntity(null);
         }
     }
 
@@ -129,6 +124,72 @@ public class PermissionService {
         //执行查询
         List<Permission> list = permissionMapper.selectByExample(example);
         return ResponseEntity.getSuccessEntityByListData(null,list);
+    }
+
+    /**
+     * 删除权限数据根据id
+     * 功能描述: 删除权限数据根据id
+     * @param: Integer id 主键id
+     * @return: 权限数据集合
+     * @auther: wuwei
+     * @date: 2020/6/28 16:27
+     */
+    public ResponseEntity deletePermissionById(Integer id){
+        //参数
+        if(id == null || id.intValue() <= 0){
+            return ResponseEntity.getFailEntity("删除失败!");
+        }
+        //执行删除
+        int count = permissionMapper.deleteByPrimaryKey(id);
+        if(count > 0){
+            return ResponseEntity.getSuccessEntity(null);//返回成功
+        }else{
+            return ResponseEntity.getFailEntity(null);//返回失败
+        }
+    }
+
+    /**
+     * 修改单个权限数据
+     * 功能描述: 修改单个权限数据
+     * @param: entity 单个权限数据实体
+     *      Integer permissionId;//表记录主键
+     *      String permissionName;//权限名称
+     *      String permissionDescribe;//权限描述
+     *      Integer isDisable;//0启用1禁用
+     * @return: 统一响应实体ResponseEntity
+     * @auther: wuwei
+     * @date: 2020/6/28 15:07
+     */
+    public ResponseEntity updatePermissionById(UpdatePermissionRequestEntity entity){
+        //参数检查
+        if(entity == null){
+            return ResponseEntity.getFailEntity("数据为空!");
+        }
+        if(entity.getPermissionId() == null || entity.getPermissionId().intValue() <= 0){
+            return ResponseEntity.getFailEntity("permissionId不能为空!");
+        }
+        if(entity.getPermissionName() == null || "".equals(entity.getPermissionName())){
+            return ResponseEntity.getFailEntity("permissionName不能为空!");
+        }
+        if(entity.getIsDisable() == null || !(entity.getIsDisable() == 0 || entity.getIsDisable() == 1)){
+            return ResponseEntity.getFailEntity("isDisable不能为空或需合法(0、1)!");
+        }
+        //执行数据操作
+        Date currentDateTime = new Date();//获取当前服务器时间
+        //构建修改数据实体
+        Permission permission = new Permission();
+        permission.setPermissionId(entity.getPermissionId());//权限id
+        permission.setPermissionName(entity.getPermissionName());//权限名称
+        permission.setPermissionDescribe(entity.getPermissionDescribe());//权限描述
+        permission.setIsDisable(entity.getIsDisable());//启用禁用
+        permission.setUpdateDatetime(currentDateTime);//修改时间
+        int count = permissionMapper.updateByPrimaryKeySelective(permission);//执行修改
+        //返回逻辑
+        if(count > 0){
+            return ResponseEntity.getSuccessEntity(null);
+        }else{
+            return ResponseEntity.getFailEntity(null);
+        }
     }
 
 }

@@ -3,12 +3,10 @@ package com.users.controller;
 import com.tools.entity.ResponseEntity;
 import com.users.bean.request.AddPermissionRequestEntity;
 import com.users.bean.request.QueryPermissionRequestEntity;
+import com.users.bean.request.UpdatePermissionRequestEntity;
 import com.users.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Auther: wuwei
@@ -30,6 +28,16 @@ public class PermissionController {
     @RequestMapping(value = "/querypermissionbycondition",method = RequestMethod.POST)
     public ResponseEntity queryPermissionByCondition(QueryPermissionRequestEntity entity){
         return permissionService.queryPermissionByCondition(entity);
+    }
+
+    @RequestMapping(value = "/deletepermissionbyid",method = RequestMethod.POST)
+    public ResponseEntity deletePermissionById(@RequestParam(value = "id") Integer id){
+        return permissionService.deletePermissionById(id);
+    }
+
+    @RequestMapping(value = "/updatepermissionbyid",method = RequestMethod.POST)
+    public ResponseEntity updatePermissionById(UpdatePermissionRequestEntity entity){
+        return permissionService.updatePermissionById(entity);
     }
 
 }
