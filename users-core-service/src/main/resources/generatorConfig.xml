@@ -103,7 +103,10 @@
         <table tableName="file" schema="user">
             <!--<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="false" type=""/>-->
         </table>
-        <table tableName="permission_element" schema="user">
+        <table tableName="oper" schema="user">
+            <!--<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="false" type=""/>-->
+        </table>
+        <table tableName="page_element" schema="user">
             <!--<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="false" type=""/>-->
         </table>
 
