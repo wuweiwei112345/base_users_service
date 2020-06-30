@@ -3,7 +3,7 @@ package com.users.bean.request;
 /**
  * @Auther: wuwei
  * @Date: 2020/6/30 17:28
- * @Description:条件查询操作请求参数实体
+ * @Description: 条件查询操作请求参数实体
  */
 public class QueryOperRequestEntity {
 
