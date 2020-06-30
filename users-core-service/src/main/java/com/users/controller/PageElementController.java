@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @Auther: wuwei
  * @Date: 2020/6/30 19:10
- * @Description: 页面元素业务控制器类
+ * @Description:页面元素业务控制器类
  */
 @RestController
 @RequestMapping("/pageelement")
