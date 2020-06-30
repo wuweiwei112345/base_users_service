@@ -3,7 +3,7 @@ package com.users.bean.request;
 /**
  * @Auther: wuwei
  * @Date: 2020/6/30 17:09
- * @Description:添加操作元素数据请求参数实体
+ * @Description: 添加操作元素数据请求参数实体
  */
 public class AddOperRequestEntity {
 
