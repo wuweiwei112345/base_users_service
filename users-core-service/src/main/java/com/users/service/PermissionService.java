@@ -2,17 +2,17 @@ package com.users.service;
 
 import com.tools.entity.ResponseEntity;
 import com.tools.mgutil.DateTimeUtil;
-import com.users.bean.request.AddPermissionElementEntity;
-import com.users.bean.request.AddPermissionRequestEntity;
-import com.users.bean.request.QueryPermissionRequestEntity;
-import com.users.bean.request.UpdatePermissionRequestEntity;
+import com.users.bean.request.*;
 import com.users.dao.mapper.PermissionElementMapper;
 import com.users.dao.mapper.PermissionMapper;
 import com.users.dao.po.Permission;
 import com.users.dao.po.PermissionElement;
+import com.users.dao.po.PermissionElementExample;
 import com.users.dao.po.PermissionExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
 import java.util.Date;
 import java.util.List;
 
@@ -234,6 +234,36 @@ public class PermissionService {
         permissionElement.setElementType(entity.getElementType());//权限关联子元素类型(菜单1、页面元素2、文件3、功能4)					0	0	0	0	0	0	0
         permissionElement.setCreateDatetime(currentDateTime);//创建时间
         int count = permissionElementMapper.insert(permissionElement);
+        //返回逻辑
+        if(count > 0){
+            return ResponseEntity.getSuccessEntity(null);
+        }else{
+            return ResponseEntity.getFailEntity(null);
+        }
+    }
+
+    /**
+     * 删除权限与权限元素之间的关系根据主键id集合
+     * 功能描述: 删除权限与权限元素之间的关系根据主键id集合
+     * @param: entity 添加参数实体
+     *      Integer ids;//主键id集合
+     * @return:
+     * @auther: wuwei
+     * @date: 2020/6/30 15:17
+     */
+    public ResponseEntity deletePermissionByIds(DeletePermissionElementEntity entity){
+        //参数检查
+        if(entity == null){
+            return ResponseEntity.getFailEntity("请传入参数!");
+        }
+        if(CollectionUtils.isEmpty(entity.getIds())){
+            return ResponseEntity.getFailEntity("ids参数为必选!");
+        }
+        //执行删除
+        PermissionElementExample example = new PermissionElementExample();
+        PermissionElementExample.Criteria criteria = example.createCriteria();
+        criteria.andElementIdIn(entity.getIds());//拼接in语句
+        int count = permissionElementMapper.deleteByExample(example);//执行批量删除
         //返回逻辑
         if(count > 0){
             return ResponseEntity.getSuccessEntity(null);

@@ -1,10 +1,7 @@
 package com.users.controller;
 
 import com.tools.entity.ResponseEntity;
-import com.users.bean.request.AddPermissionElementEntity;
-import com.users.bean.request.AddPermissionRequestEntity;
-import com.users.bean.request.QueryPermissionRequestEntity;
-import com.users.bean.request.UpdatePermissionRequestEntity;
+import com.users.bean.request.*;
 import com.users.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +41,11 @@ public class PermissionController {
     @RequestMapping(value = "/addpermissionelement",method = RequestMethod.POST)
     public ResponseEntity addPermissionElement(AddPermissionElementEntity entity){
         return permissionService.addPermissionElement(entity);
+    }
+
+    @RequestMapping(value = "/deletepermissionbyids",method = RequestMethod.POST)
+    public ResponseEntity deletePermissionByIds(DeletePermissionElementEntity entity){
+        return permissionService.deletePermissionByIds(entity);
     }
 
 }
