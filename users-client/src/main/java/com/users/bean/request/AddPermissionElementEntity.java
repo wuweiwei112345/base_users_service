@@ -7,7 +7,7 @@ import java.util.Date;
  * @Date: 2020/6/30 15:13
  * @Description:添加权限与元素之间的关联数据请求实体
  */
-public class AddPermissionElement {
+public class AddPermissionElementEntity {
 
     private Integer permissionId;//权限id
     private Integer elementId;//权限关联元素id
