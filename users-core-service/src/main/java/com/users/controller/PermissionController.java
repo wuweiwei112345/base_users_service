@@ -1,6 +1,7 @@
 package com.users.controller;
 
 import com.tools.entity.ResponseEntity;
+import com.users.bean.request.AddPermissionElementEntity;
 import com.users.bean.request.AddPermissionRequestEntity;
 import com.users.bean.request.QueryPermissionRequestEntity;
 import com.users.bean.request.UpdatePermissionRequestEntity;
@@ -38,6 +39,11 @@ public class PermissionController {
     @RequestMapping(value = "/updatepermissionbyid",method = RequestMethod.POST)
     public ResponseEntity updatePermissionById(UpdatePermissionRequestEntity entity){
         return permissionService.updatePermissionById(entity);
+    }
+
+    @RequestMapping(value = "/addpermissionelement",method = RequestMethod.POST)
+    public ResponseEntity addPermissionElement(AddPermissionElementEntity entity){
+        return permissionService.addPermissionElement(entity);
     }
 
 }

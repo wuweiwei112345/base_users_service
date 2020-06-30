@@ -2,11 +2,14 @@ package com.users.service;
 
 import com.tools.entity.ResponseEntity;
 import com.tools.mgutil.DateTimeUtil;
+import com.users.bean.request.AddPermissionElementEntity;
 import com.users.bean.request.AddPermissionRequestEntity;
 import com.users.bean.request.QueryPermissionRequestEntity;
 import com.users.bean.request.UpdatePermissionRequestEntity;
+import com.users.dao.mapper.PermissionElementMapper;
 import com.users.dao.mapper.PermissionMapper;
 import com.users.dao.po.Permission;
+import com.users.dao.po.PermissionElement;
 import com.users.dao.po.PermissionExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +25,9 @@ import java.util.List;
 public class PermissionService {
 
     @Autowired
-    public PermissionMapper permissionMapper;
+    private PermissionMapper permissionMapper;
+    @Autowired
+    private PermissionElementMapper permissionElementMapper;
 
     /**
      * 添加单个权限数据
@@ -184,6 +189,51 @@ public class PermissionService {
         permission.setIsDisable(entity.getIsDisable());//启用禁用
         permission.setUpdateDatetime(currentDateTime);//修改时间
         int count = permissionMapper.updateByPrimaryKeySelective(permission);//执行修改
+        //返回逻辑
+        if(count > 0){
+            return ResponseEntity.getSuccessEntity(null);
+        }else{
+            return ResponseEntity.getFailEntity(null);
+        }
+    }
+
+    /**
+     * 关联权限与权限元素之间的关系
+     * 功能描述: 关联权限与权限元素之间的关系
+     * @param: entity 添加参数实体
+     *      Integer permissionId;//权限id
+     *      Integer elementId;//权限关联元素id
+     *      Integer elementType;//权限关联子元素类型
+     * @return:
+     * @auther: wuwei
+     * @date: 2020/6/30 15:17
+     */
+    public ResponseEntity addPermissionElement(AddPermissionElementEntity entity){
+        //参数检查
+        if(entity == null){
+            return ResponseEntity.getFailEntity("请传入参数!");
+        }
+        if(entity.getPermissionId() == null || entity.getElementId().intValue() <= 0){
+            return ResponseEntity.getFailEntity("permissionId参数为必选!");
+        }
+        if(entity.getElementId() == null || entity.getElementId().intValue() <= 0){
+            return ResponseEntity.getFailEntity("elementId参数为必选!");
+        }
+        if(entity.getElementType() == null ||
+                !(entity.getElementType().intValue() == 1 ||
+                        entity.getElementType().intValue() == 2 ||
+                        entity.getElementType().intValue() == 3 ||
+                        entity.getElementType().intValue() == 4)){
+            return ResponseEntity.getFailEntity("elementType参数为必选或需合法!");
+        }
+        //执行添加
+        Date currentDateTime = new Date();//当前时间
+        PermissionElement permissionElement = new PermissionElement();
+        permissionElement.setPermissionId(entity.getPermissionId());//权限id
+        permissionElement.setElementId(entity.getElementId());//权限关联元素id
+        permissionElement.setElementType(entity.getElementType());//权限关联子元素类型(菜单1、页面元素2、文件3、功能4)					0	0	0	0	0	0	0
+        permissionElement.setCreateDatetime(currentDateTime);//创建时间
+        int count = permissionElementMapper.insert(permissionElement);
         //返回逻辑
         if(count > 0){
             return ResponseEntity.getSuccessEntity(null);
