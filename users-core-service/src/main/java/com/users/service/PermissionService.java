@@ -262,7 +262,7 @@ public class PermissionService {
         //执行删除
         PermissionElementExample example = new PermissionElementExample();
         PermissionElementExample.Criteria criteria = example.createCriteria();
-        criteria.andElementIdIn(entity.getIds());//拼接in语句
+        criteria.andPermissionElementIdIn(entity.getIds());//拼接批量删除id集合
         int count = permissionElementMapper.deleteByExample(example);//执行批量删除
         //返回逻辑
         if(count > 0){
