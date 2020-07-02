@@ -3,7 +3,10 @@ package com.users.controller;
 import com.tools.entity.ResponseEntity;
 import com.users.bean.request.*;
 import com.users.service.PermissionService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/permission")
 public class PermissionController {
+
+    private static final Logger logger = LoggerFactory.getLogger(PermissionController.class);
 
     @Autowired
     private PermissionService permissionService;
