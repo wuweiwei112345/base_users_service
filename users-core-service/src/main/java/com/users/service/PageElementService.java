@@ -41,13 +41,13 @@ public class PageElementService {
     public ResponseEntity addPageElement(AddPageElementRequestEntity entity){
         //参数检查
         if(entity == null){
-            return ResponseEntity.getFailEntity("数据为空!");
+            return ResponseEntity.getFail("数据为空!");
         }
         if(entity.getPageElementCode() == null || "".equals(entity.getPageElementCode())){
-            return ResponseEntity.getFailEntity("pageElementCode不能为空!");
+            return ResponseEntity.getFail("pageElementCode不能为空!");
         }
         if(entity.getIsDisable() == null || !(entity.getIsDisable() == 0 || entity.getIsDisable() == 1)){
-            return ResponseEntity.getFailEntity("isDisable不能为空或需合法(0、1)!");
+            return ResponseEntity.getFail("isDisable不能为空或需合法(0、1)!");
         }
         //执行数据操作
         Date currentDateTime = new Date();//获取当前服务器时间
@@ -60,9 +60,9 @@ public class PageElementService {
         int count = pageElementMapper.insert(pageElement);//执行添加
         //返回逻辑
         if(count > 0){
-            return ResponseEntity.getSuccessEntity(null);
+            return ResponseEntity.getSuccess(null);
         }else{
-            return ResponseEntity.getFailEntity(null);
+            return ResponseEntity.getFail(null);
         }
     }
 
@@ -86,7 +86,7 @@ public class PageElementService {
         //判断是否传入查询条件
         if(entity == null){
             List<PageElement> list = pageElementMapper.selectByExample(example);
-            return ResponseEntity.getSuccessEntityByListData(null,list);
+            return ResponseEntity.getSuccessByListData(null,list);
         }
         //判断传入的查询条件并拼接
         PageElementExample.Criteria criteria = example.createCriteria();
@@ -121,7 +121,7 @@ public class PageElementService {
         }
         //执行查询
         List<PageElement> list = pageElementMapper.selectByExample(example);
-        return ResponseEntity.getSuccessEntityByListData(null,list);
+        return ResponseEntity.getSuccessByListData(null,list);
     }
 
     /**
@@ -135,14 +135,14 @@ public class PageElementService {
     public ResponseEntity deletePageElementById(Integer id){
         //参数
         if(id == null || id.intValue() <= 0){
-            return ResponseEntity.getFailEntity(null);
+            return ResponseEntity.getFail(null);
         }
         //执行删除
         int count = pageElementMapper.deleteByPrimaryKey(id);
         if(count > 0){
-            return ResponseEntity.getSuccessEntity(null);//返回成功
+            return ResponseEntity.getSuccess(null);//返回成功
         }else{
-            return ResponseEntity.getFailEntity(null);//返回失败
+            return ResponseEntity.getFail(null);//返回失败
         }
     }
 
@@ -160,16 +160,16 @@ public class PageElementService {
     public ResponseEntity updatePageElementById(UpdatePageElementRequestEntity entity){
         //参数检查
         if(entity == null){
-            return ResponseEntity.getFailEntity("数据为空!");
+            return ResponseEntity.getFail("数据为空!");
         }
         if(entity.getPageElementId() == null || entity.getPageElementId().intValue() < 0){
-            return ResponseEntity.getFailEntity("pageElementId不能为空!");
+            return ResponseEntity.getFail("pageElementId不能为空!");
         }
         if(entity.getPageElementCode() == null || "".equals(entity.getPageElementCode())){
-            return ResponseEntity.getFailEntity("pageElementCode不能为空!");
+            return ResponseEntity.getFail("pageElementCode不能为空!");
         }
         if(entity.getIsDisable() == null || !(entity.getIsDisable() == 0 || entity.getIsDisable() == 1)){
-            return ResponseEntity.getFailEntity("isDisable不能为空或需合法(0、1)!");
+            return ResponseEntity.getFail("isDisable不能为空或需合法(0、1)!");
         }
         //执行数据操作
         Date currentDateTime = new Date();//获取当前服务器时间
@@ -182,9 +182,9 @@ public class PageElementService {
         int count = pageElementMapper.updateByPrimaryKeySelective(pageElement);//执行添加
         //返回逻辑
         if(count > 0){
-            return ResponseEntity.getSuccessEntity(null);
+            return ResponseEntity.getSuccess(null);
         }else{
-            return ResponseEntity.getFailEntity(null);
+            return ResponseEntity.getFail(null);
         }
     }
 

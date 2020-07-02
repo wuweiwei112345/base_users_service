@@ -41,16 +41,16 @@ public class OperService {
     public ResponseEntity addOper(AddOperRequestEntity entity){
         //参数检查
         if(entity == null){
-            return ResponseEntity.getFailEntity("请传入参数!");
+            return ResponseEntity.getFail("请传入参数!");
         }
         if(entity.getOperName() == null || "".equals(entity.getOperName())){
-            return ResponseEntity.getFailEntity("operName参数为必选!");
+            return ResponseEntity.getFail("operName参数为必选!");
         }
         if(entity.getOperCode() == null || "".equals(entity.getOperCode())){
-            return ResponseEntity.getFailEntity("operCode参数为必选!");
+            return ResponseEntity.getFail("operCode参数为必选!");
         }
         if(entity.getOperUrl() == null || "".equals(entity.getOperUrl())){
-            return ResponseEntity.getFailEntity("operUrl参数为必选!");
+            return ResponseEntity.getFail("operUrl参数为必选!");
         }
         if(entity.getParentOperId() == null || entity.getParentOperId().intValue() < 0){
             entity.setParentOperId(0);//设置默认为0
@@ -58,7 +58,7 @@ public class OperService {
         if(entity.getIsDisable() == null ||
                 !(entity.getIsDisable().intValue() == 0 ||
                 entity.getIsDisable().intValue() == 1)){
-            return ResponseEntity.getFailEntity("isDisable参数为必选!");
+            return ResponseEntity.getFail("isDisable参数为必选!");
         }
         //执行添加
         Date currentDateTime = new Date();
@@ -73,9 +73,9 @@ public class OperService {
         int count = operMapper.insert(oper);
         //返回逻辑
         if(count > 0){
-            return ResponseEntity.getSuccessEntity(null);
+            return ResponseEntity.getSuccess(null);
         }else{
-            return ResponseEntity.getFailEntity(null);
+            return ResponseEntity.getFail(null);
         }
     }
 
@@ -86,7 +86,7 @@ public class OperService {
             //执行查询
             List<Oper> list = operMapper.selectByExample(operExample);
             //返回数据
-            return ResponseEntity.getSuccessEntityByListData(null,list);
+            return ResponseEntity.getSuccessByListData(null,list);
         }
         //拼接查询条件
         OperExample.Criteria criteria = operExample.createCriteria();
@@ -133,7 +133,7 @@ public class OperService {
         //执行查询
         List<Oper> list = operMapper.selectByExample(operExample);
         //返回数据
-        return ResponseEntity.getSuccessEntityByListData(null,list);
+        return ResponseEntity.getSuccessByListData(null,list);
     }
 
     /**
@@ -147,15 +147,15 @@ public class OperService {
     public ResponseEntity deleteOperById(Integer id){
         //参数检查
         if(id == null || id.intValue() <= 0){
-            return ResponseEntity.getFailEntity("id参数为必选!");
+            return ResponseEntity.getFail("id参数为必选!");
         }
         //执行删除
         int count = operMapper.deleteByPrimaryKey(id);
         //返回逻辑
         if(count > 0){
-            return ResponseEntity.getSuccessEntity(null);
+            return ResponseEntity.getSuccess(null);
         }else{
-            return ResponseEntity.getFailEntity(null);
+            return ResponseEntity.getFail(null);
         }
     }
 
@@ -176,27 +176,27 @@ public class OperService {
     public ResponseEntity updateOperById(UpdateOperRequestEntity entity){
         //参数检查
         if(entity == null){
-            return ResponseEntity.getFailEntity("请传入参数!");
+            return ResponseEntity.getFail("请传入参数!");
         }
         if(entity.getOperId() == null || entity.getOperId().intValue() <= 0){
-            return ResponseEntity.getFailEntity("operId参数为必选!");
+            return ResponseEntity.getFail("operId参数为必选!");
         }
         if(entity.getOperName() == null || "".equals(entity.getOperName())){
-            return ResponseEntity.getFailEntity("operName参数为必选!");
+            return ResponseEntity.getFail("operName参数为必选!");
         }
         if(entity.getOperCode() == null || "".equals(entity.getOperCode())){
-            return ResponseEntity.getFailEntity("operCode参数为必选!");
+            return ResponseEntity.getFail("operCode参数为必选!");
         }
         if(entity.getOperUrl() == null || "".equals(entity.getOperUrl())){
-            return ResponseEntity.getFailEntity("operUrl参数为必选!");
+            return ResponseEntity.getFail("operUrl参数为必选!");
         }
         if(entity.getParentOperId() == null || entity.getParentOperId().intValue() < 0){
-            return ResponseEntity.getFailEntity("parentOperId参数为必选!");
+            return ResponseEntity.getFail("parentOperId参数为必选!");
         }
         if(entity.getIsDisable() == null ||
                 !(entity.getIsDisable().intValue() == 0 ||
                         entity.getIsDisable().intValue() == 1)){
-            return ResponseEntity.getFailEntity("isDisable参数为必选!");
+            return ResponseEntity.getFail("isDisable参数为必选!");
         }
         //执行添加
         Date currentDateTime = new Date();
@@ -211,9 +211,9 @@ public class OperService {
         int count = operMapper.updateByPrimaryKeySelective(oper);
         //返回逻辑
         if(count > 0){
-            return ResponseEntity.getSuccessEntity(null);
+            return ResponseEntity.getSuccess(null);
         }else{
-            return ResponseEntity.getFailEntity(null);
+            return ResponseEntity.getFail(null);
         }
     }
 

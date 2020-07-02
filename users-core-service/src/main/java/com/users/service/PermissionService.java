@@ -45,13 +45,13 @@ public class PermissionService {
     public ResponseEntity addPermission(AddPermissionRequestEntity entity){
         //参数检查
         if(entity == null){
-            return ResponseEntity.getFailEntity("数据为空!");
+            return ResponseEntity.getFail("数据为空!");
         }
         if(entity.getPermissionName() == null || "".equals(entity.getPermissionName())){
-            return ResponseEntity.getFailEntity("permissionName不能为空!");
+            return ResponseEntity.getFail("permissionName不能为空!");
         }
         if(entity.getIsDisable() == null || !(entity.getIsDisable() == 0 || entity.getIsDisable() == 1)){
-            return ResponseEntity.getFailEntity("isDisable不能为空或需合法(0、1)!");
+            return ResponseEntity.getFail("isDisable不能为空或需合法(0、1)!");
         }
         //执行数据操作
         Date currentDateTime = new Date();//获取当前服务器时间
@@ -65,9 +65,9 @@ public class PermissionService {
         int count = permissionMapper.insert(permission);//执行添加
         //返回逻辑
         if(count > 0){
-            return ResponseEntity.getSuccessEntity(null);
+            return ResponseEntity.getSuccess(null);
         }else{
-            return ResponseEntity.getFailEntity(null);
+            return ResponseEntity.getFail(null);
         }
     }
 
@@ -84,7 +84,7 @@ public class PermissionService {
         //判断是否传入查询条件
         if(entity == null){
             List<Permission> list = permissionMapper.selectByExample(example);
-            return ResponseEntity.getSuccessEntityByListData(null,list);
+            return ResponseEntity.getSuccessByListData(null,list);
         }
         //判断传入的查询条件并拼接
         PermissionExample.Criteria criteria = example.createCriteria();
@@ -128,7 +128,7 @@ public class PermissionService {
         }
         //执行查询
         List<Permission> list = permissionMapper.selectByExample(example);
-        return ResponseEntity.getSuccessEntityByListData(null,list);
+        return ResponseEntity.getSuccessByListData(null,list);
     }
 
     /**
@@ -142,14 +142,14 @@ public class PermissionService {
     public ResponseEntity deletePermissionById(Integer id){
         //参数
         if(id == null || id.intValue() <= 0){
-            return ResponseEntity.getFailEntity("删除失败!");
+            return ResponseEntity.getFail("删除失败!");
         }
         //执行删除
         int count = permissionMapper.deleteByPrimaryKey(id);
         if(count > 0){
-            return ResponseEntity.getSuccessEntity(null);//返回成功
+            return ResponseEntity.getSuccess(null);//返回成功
         }else{
-            return ResponseEntity.getFailEntity(null);//返回失败
+            return ResponseEntity.getFail(null);//返回失败
         }
     }
 
@@ -168,16 +168,16 @@ public class PermissionService {
     public ResponseEntity updatePermissionById(UpdatePermissionRequestEntity entity){
         //参数检查
         if(entity == null){
-            return ResponseEntity.getFailEntity("数据为空!");
+            return ResponseEntity.getFail("数据为空!");
         }
         if(entity.getPermissionId() == null || entity.getPermissionId().intValue() <= 0){
-            return ResponseEntity.getFailEntity("permissionId不能为空!");
+            return ResponseEntity.getFail("permissionId不能为空!");
         }
         if(entity.getPermissionName() == null || "".equals(entity.getPermissionName())){
-            return ResponseEntity.getFailEntity("permissionName不能为空!");
+            return ResponseEntity.getFail("permissionName不能为空!");
         }
         if(entity.getIsDisable() == null || !(entity.getIsDisable() == 0 || entity.getIsDisable() == 1)){
-            return ResponseEntity.getFailEntity("isDisable不能为空或需合法(0、1)!");
+            return ResponseEntity.getFail("isDisable不能为空或需合法(0、1)!");
         }
         //执行数据操作
         Date currentDateTime = new Date();//获取当前服务器时间
@@ -191,9 +191,9 @@ public class PermissionService {
         int count = permissionMapper.updateByPrimaryKeySelective(permission);//执行修改
         //返回逻辑
         if(count > 0){
-            return ResponseEntity.getSuccessEntity(null);
+            return ResponseEntity.getSuccess(null);
         }else{
-            return ResponseEntity.getFailEntity(null);
+            return ResponseEntity.getFail(null);
         }
     }
 
@@ -211,20 +211,20 @@ public class PermissionService {
     public ResponseEntity addPermissionElement(AddPermissionElementEntity entity){
         //参数检查
         if(entity == null){
-            return ResponseEntity.getFailEntity("请传入参数!");
+            return ResponseEntity.getFail("请传入参数!");
         }
         if(entity.getPermissionId() == null || entity.getElementId().intValue() <= 0){
-            return ResponseEntity.getFailEntity("permissionId参数为必选!");
+            return ResponseEntity.getFail("permissionId参数为必选!");
         }
         if(entity.getElementId() == null || entity.getElementId().intValue() <= 0){
-            return ResponseEntity.getFailEntity("elementId参数为必选!");
+            return ResponseEntity.getFail("elementId参数为必选!");
         }
         if(entity.getElementType() == null ||
                 !(entity.getElementType().intValue() == 1 ||
                         entity.getElementType().intValue() == 2 ||
                         entity.getElementType().intValue() == 3 ||
                         entity.getElementType().intValue() == 4)){
-            return ResponseEntity.getFailEntity("elementType参数为必选或需合法!");
+            return ResponseEntity.getFail("elementType参数为必选或需合法!");
         }
         //执行添加
         Date currentDateTime = new Date();//当前时间
@@ -236,9 +236,9 @@ public class PermissionService {
         int count = permissionElementMapper.insert(permissionElement);
         //返回逻辑
         if(count > 0){
-            return ResponseEntity.getSuccessEntity(null);
+            return ResponseEntity.getSuccess(null);
         }else{
-            return ResponseEntity.getFailEntity(null);
+            return ResponseEntity.getFail(null);
         }
     }
 
@@ -254,10 +254,10 @@ public class PermissionService {
     public ResponseEntity deletePermissionByIds(DeletePermissionElementEntity entity){
         //参数检查
         if(entity == null){
-            return ResponseEntity.getFailEntity("请传入参数!");
+            return ResponseEntity.getFail("请传入参数!");
         }
         if(CollectionUtils.isEmpty(entity.getIds())){
-            return ResponseEntity.getFailEntity("ids参数为必选!");
+            return ResponseEntity.getFail("ids参数为必选!");
         }
         //执行删除
         PermissionElementExample example = new PermissionElementExample();
@@ -266,9 +266,9 @@ public class PermissionService {
         int count = permissionElementMapper.deleteByExample(example);//执行批量删除
         //返回逻辑
         if(count > 0){
-            return ResponseEntity.getSuccessEntity(null);
+            return ResponseEntity.getSuccess(null);
         }else{
-            return ResponseEntity.getFailEntity(null);
+            return ResponseEntity.getFail(null);
         }
     }
 
