@@ -1,6 +1,7 @@
 package com.users.controller;
 
 import com.tools.entity.ResponseEntity;
+import com.tools.mgutil.RedisLock;
 import com.users.bean.request.*;
 import com.users.service.PermissionService;
 import org.slf4j.Logger;
@@ -20,6 +21,8 @@ public class PermissionController {
 
     private static final Logger logger = LoggerFactory.getLogger(PermissionController.class);
 
+    @Autowired
+    private RedisTemplate redisTemplate;
     @Autowired
     private PermissionService permissionService;
 
