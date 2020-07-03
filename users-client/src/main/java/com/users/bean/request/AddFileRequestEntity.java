@@ -1,5 +1,6 @@
 package com.users.bean.request;
 
+import com.tools.entity.RequestBaseEntity;
 import java.util.Date;
 
 /**
@@ -7,7 +8,7 @@ import java.util.Date;
  * @Date: 2020/6/29 15:56
  * @Description:添加文件元素请求数据实体
  */
-public class AddFileRequestEntity {
+public class AddFileRequestEntity extends RequestBaseEntity {
 
     private String filePath;//文件路径
     private Integer isDisable;//0启用1禁用
