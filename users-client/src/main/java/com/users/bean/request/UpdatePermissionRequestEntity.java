@@ -1,5 +1,7 @@
 package com.users.bean.request;
 
+import com.tools.entity.RequestBaseEntity;
+
 import java.util.Date;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Date;
  * @Date: 2020/6/29 15:14
  * @Description: 修改权限请求实体
  */
-public class UpdatePermissionRequestEntity {
+public class UpdatePermissionRequestEntity extends RequestBaseEntity {
 
     private Integer permissionId;//权限主键id
     private String permissionName;//权限名称

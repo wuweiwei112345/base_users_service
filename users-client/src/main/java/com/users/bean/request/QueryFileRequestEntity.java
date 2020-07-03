@@ -1,5 +1,7 @@
 package com.users.bean.request;
 
+import com.tools.entity.RequestBaseEntity;
+
 import java.util.Date;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Date;
  * @Date: 2020/6/29 15:57
  * @Description:查询文件元素请求数据实体
  */
-public class QueryFileRequestEntity {
+public class QueryFileRequestEntity extends RequestBaseEntity {
 
     private Integer fileId;//表记录主键id
     private String filePath;//文件路径

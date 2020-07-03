@@ -1,11 +1,13 @@
 package com.users.bean.request;
 
+import com.tools.entity.RequestBaseEntity;
+
 /**
  * @Auther: wuwei
  * @Date: 2020/6/29 17:35
  * @Description: 查询菜单数据参数实体
  */
-public class QueryMenuRequestEntity {
+public class QueryMenuRequestEntity extends RequestBaseEntity {
 
     private Integer menuId;//表记录主键id
     private String menuName;//菜单名称

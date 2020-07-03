@@ -1,5 +1,7 @@
 package com.users.bean.request;
 
+import com.tools.entity.RequestBaseEntity;
+
 import java.util.List;
 
 /**
@@ -7,7 +9,7 @@ import java.util.List;
  * @Date: 2020/6/30 15:52
  * @Description:删除权限与元素关联关系参数实体
  */
-public class DeletePermissionElementEntity {
+public class DeletePermissionElementEntity extends RequestBaseEntity {
 
     private List<Integer> ids;
 

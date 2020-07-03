@@ -1,11 +1,13 @@
 package com.users.bean.request;
 
+import com.tools.entity.RequestBaseEntity;
+
 /**
  * @Auther: wuwei
  * @Date: 2020/6/30 19:00
  * @Description:修改查询页面元素请求参数实体
  */
-public class UpdatePageElementRequestEntity {
+public class UpdatePageElementRequestEntity extends RequestBaseEntity {
 
     private Integer pageElementId;//表记录主键id
     private String pageElementCode;//页面元素英文简码

@@ -1,11 +1,13 @@
 package com.users.bean.request;
 
+import com.tools.entity.RequestBaseEntity;
+
 /**
  * @Auther: wuwei
  * @Date: 2020/6/30 17:28
  * @Description: 条件查询操作请求参数实体
  */
-public class QueryOperRequestEntity {
+public class QueryOperRequestEntity extends RequestBaseEntity {
 
     private Integer operId;//表记录主键id
     private String operName;//操作名称

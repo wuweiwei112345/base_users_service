@@ -1,11 +1,13 @@
 package com.users.bean.request;
 
+import com.tools.entity.RequestBaseEntity;
+
 /**
  * @Auther: wuwei
  * @Date: 2020/6/29 15:57
  * @Description:修改文件元素请求数据实体
  */
-public class UpdateFileRequestEntity {
+public class UpdateFileRequestEntity extends RequestBaseEntity {
 
     private Integer fileId;//表记录主键id
     private String filePath;//文件路径

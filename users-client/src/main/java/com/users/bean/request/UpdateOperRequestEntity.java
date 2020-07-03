@@ -1,11 +1,13 @@
 package com.users.bean.request;
 
+import com.tools.entity.RequestBaseEntity;
+
 /**
  * @Auther: wuwei
  * @Date: 2020/6/30 17:58
  * @Description:修改操作请求参数实体
  */
-public class UpdateOperRequestEntity {
+public class UpdateOperRequestEntity extends RequestBaseEntity {
 
     private Integer operId;//表记录主键id
     private String operName;//操作名称
