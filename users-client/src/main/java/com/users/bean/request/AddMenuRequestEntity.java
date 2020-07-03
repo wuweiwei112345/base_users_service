@@ -1,5 +1,7 @@
 package com.users.bean.request;
 
+import com.tools.entity.RequestBaseEntity;
+
 import java.util.Date;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Date;
  * @Date: 2020/6/29 17:34
  * @Description:
  */
-public class AddMenuRequestEntity {
+public class AddMenuRequestEntity extends RequestBaseEntity {
 
     private String menuName;//菜单名称
     private String menuDescribe;//菜单描述

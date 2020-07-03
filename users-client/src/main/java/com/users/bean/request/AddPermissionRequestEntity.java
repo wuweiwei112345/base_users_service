@@ -1,5 +1,7 @@
 package com.users.bean.request;
 
+import com.tools.entity.RequestBaseEntity;
+
 import java.util.Date;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Date;
  * @Date: 2020/6/28 15:02
  * @Description:添加权限请求实体
  */
-public class AddPermissionRequestEntity {
+public class AddPermissionRequestEntity extends RequestBaseEntity {
 
     private String permissionName;//权限名称
     private String permissionDescribe;//权限描述

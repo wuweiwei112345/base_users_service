@@ -1,11 +1,13 @@
 package com.users.bean.request;
 
+import com.tools.entity.RequestBaseEntity;
+
 /**
  * @Auther: wuwei
  * @Date: 2020/6/30 18:59
  * @Description:添加页面元素请求参数实体
  */
-public class AddPageElementRequestEntity {
+public class AddPageElementRequestEntity extends RequestBaseEntity {
 
     private String pageElementCode;//页面元素英文简码
     private Integer isDisable;//0启用1禁用

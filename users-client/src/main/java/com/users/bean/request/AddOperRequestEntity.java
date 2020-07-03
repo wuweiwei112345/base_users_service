@@ -1,11 +1,13 @@
 package com.users.bean.request;
 
+import com.tools.entity.RequestBaseEntity;
+
 /**
  * @Auther: wuwei
  * @Date: 2020/6/30 17:09
  * @Description: 添加操作元素数据请求参数实体
  */
-public class AddOperRequestEntity {
+public class AddOperRequestEntity extends RequestBaseEntity {
 
     private String operName;//操作名称
     private String operCode;//操作简码
