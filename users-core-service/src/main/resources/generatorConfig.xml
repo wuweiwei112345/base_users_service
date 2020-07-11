@@ -103,6 +103,9 @@
         <table tableName="file" schema="user">
             <!--<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="false" type=""/>-->
         </table>
+        <table tableName="users" schema="user">
+            <!--<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="false" type=""/>-->
+        </table>
 
     </context>
 </generatorConfiguration>

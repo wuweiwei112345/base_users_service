@@ -55,11 +55,13 @@ public interface PermissionMapper {
      */
     @Insert({
         "insert into permission (permission_id, permission_name, ",
-        "permission_describe, is_disable, ",
-        "create_datetime, update_datetime)",
+        "permission_describe, permission_key, ",
+        "is_disable, create_datetime, ",
+        "update_datetime)",
         "values (#{permissionId,jdbcType=INTEGER}, #{permissionName,jdbcType=VARCHAR}, ",
-        "#{permissionDescribe,jdbcType=VARCHAR}, #{isDisable,jdbcType=INTEGER}, ",
-        "#{createDatetime,jdbcType=TIMESTAMP}, #{updateDatetime,jdbcType=TIMESTAMP})"
+        "#{permissionDescribe,jdbcType=VARCHAR}, #{permissionKey,jdbcType=VARCHAR}, ",
+        "#{isDisable,jdbcType=INTEGER}, #{createDatetime,jdbcType=TIMESTAMP}, ",
+        "#{updateDatetime,jdbcType=TIMESTAMP})"
     })
     int insert(Permission record);
 
@@ -83,6 +85,7 @@ public interface PermissionMapper {
         @Result(column="permission_id", property="permissionId", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="permission_name", property="permissionName", jdbcType=JdbcType.VARCHAR),
         @Result(column="permission_describe", property="permissionDescribe", jdbcType=JdbcType.VARCHAR),
+        @Result(column="permission_key", property="permissionKey", jdbcType=JdbcType.VARCHAR),
         @Result(column="is_disable", property="isDisable", jdbcType=JdbcType.INTEGER),
         @Result(column="create_datetime", property="createDatetime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_datetime", property="updateDatetime", jdbcType=JdbcType.TIMESTAMP)
@@ -97,8 +100,8 @@ public interface PermissionMapper {
      */
     @Select({
         "select",
-        "permission_id, permission_name, permission_describe, is_disable, create_datetime, ",
-        "update_datetime",
+        "permission_id, permission_name, permission_describe, permission_key, is_disable, ",
+        "create_datetime, update_datetime",
         "from permission",
         "where permission_id = #{permissionId,jdbcType=INTEGER}"
     })
@@ -106,6 +109,7 @@ public interface PermissionMapper {
         @Result(column="permission_id", property="permissionId", jdbcType=JdbcType.INTEGER, id=true),
         @Result(column="permission_name", property="permissionName", jdbcType=JdbcType.VARCHAR),
         @Result(column="permission_describe", property="permissionDescribe", jdbcType=JdbcType.VARCHAR),
+        @Result(column="permission_key", property="permissionKey", jdbcType=JdbcType.VARCHAR),
         @Result(column="is_disable", property="isDisable", jdbcType=JdbcType.INTEGER),
         @Result(column="create_datetime", property="createDatetime", jdbcType=JdbcType.TIMESTAMP),
         @Result(column="update_datetime", property="updateDatetime", jdbcType=JdbcType.TIMESTAMP)
@@ -149,6 +153,7 @@ public interface PermissionMapper {
         "update permission",
         "set permission_name = #{permissionName,jdbcType=VARCHAR},",
           "permission_describe = #{permissionDescribe,jdbcType=VARCHAR},",
+          "permission_key = #{permissionKey,jdbcType=VARCHAR},",
           "is_disable = #{isDisable,jdbcType=INTEGER},",
           "create_datetime = #{createDatetime,jdbcType=TIMESTAMP},",
           "update_datetime = #{updateDatetime,jdbcType=TIMESTAMP}",
