@@ -1,6 +1,7 @@
 package com.users.controller;
 
 import com.tools.entity.ResponseEntity;
+import com.users.bean.request.LoginRequestEntity;
 import com.users.bean.request.RegisterUserInfoRequestEntity;
 import com.users.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,20 @@ public class UsersController {
     @RequestMapping(value = "/registeruserinfo",method = RequestMethod.POST)
     public ResponseEntity registerUserInfo(RegisterUserInfoRequestEntity entity){
         return usersService.registerUserInfo(entity);
+    }
+
+    /**
+     * 用户登录
+     * 功能描述: 用户登录
+     * @param: String userName;//用户名
+     * @param: String userPassword;//用户密码
+     * @return: 统一响应实体 用户登录token
+     * @auther: wuwei
+     * @date: 2020/7/11 15:26
+     */
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public ResponseEntity login(LoginRequestEntity entity){
+        return usersService.login(entity);
     }
 
 }
