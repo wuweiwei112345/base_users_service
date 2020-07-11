@@ -2,8 +2,6 @@ package com.users.bean.request;
 
 import com.tools.entity.RequestBaseEntity;
 
-import java.util.Date;
-
 /**
  * @Auther: wuwei
  * @Date: 2020/6/29 15:57
