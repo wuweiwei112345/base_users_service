@@ -595,6 +595,66 @@ public class UsersExample {
             return (Criteria) this;
         }
 
+        public Criteria andIsAdminIsNull() {
+            addCriterion("is_admin is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAdminIsNotNull() {
+            addCriterion("is_admin is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAdminEqualTo(Integer value) {
+            addCriterion("is_admin =", value, "isAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAdminNotEqualTo(Integer value) {
+            addCriterion("is_admin <>", value, "isAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAdminGreaterThan(Integer value) {
+            addCriterion("is_admin >", value, "isAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAdminGreaterThanOrEqualTo(Integer value) {
+            addCriterion("is_admin >=", value, "isAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAdminLessThan(Integer value) {
+            addCriterion("is_admin <", value, "isAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAdminLessThanOrEqualTo(Integer value) {
+            addCriterion("is_admin <=", value, "isAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAdminIn(List<Integer> values) {
+            addCriterion("is_admin in", values, "isAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAdminNotIn(List<Integer> values) {
+            addCriterion("is_admin not in", values, "isAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAdminBetween(Integer value1, Integer value2) {
+            addCriterion("is_admin between", value1, value2, "isAdmin");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAdminNotBetween(Integer value1, Integer value2) {
+            addCriterion("is_admin not between", value1, value2, "isAdmin");
+            return (Criteria) this;
+        }
+
         public Criteria andCreateDatetimeIsNull() {
             addCriterion("create_datetime is null");
             return (Criteria) this;

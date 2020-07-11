@@ -70,6 +70,10 @@ public class UsersSqlProvider {
             sql.VALUES("is_disable", "#{isDisable,jdbcType=INTEGER}");
         }
         
+        if (record.getIsAdmin() != null) {
+            sql.VALUES("is_admin", "#{isAdmin,jdbcType=INTEGER}");
+        }
+        
         if (record.getCreateDatetime() != null) {
             sql.VALUES("create_datetime", "#{createDatetime,jdbcType=TIMESTAMP}");
         }
@@ -95,6 +99,7 @@ public class UsersSqlProvider {
         sql.SELECT("user_email");
         sql.SELECT("user_password");
         sql.SELECT("is_disable");
+        sql.SELECT("is_admin");
         sql.SELECT("create_datetime");
         sql.FROM("users");
         applyWhere(sql, example, false);
@@ -143,6 +148,10 @@ public class UsersSqlProvider {
             sql.SET("is_disable = #{record.isDisable,jdbcType=INTEGER}");
         }
         
+        if (record.getIsAdmin() != null) {
+            sql.SET("is_admin = #{record.isAdmin,jdbcType=INTEGER}");
+        }
+        
         if (record.getCreateDatetime() != null) {
             sql.SET("create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP}");
         }
@@ -167,6 +176,7 @@ public class UsersSqlProvider {
         sql.SET("user_email = #{record.userEmail,jdbcType=VARCHAR}");
         sql.SET("user_password = #{record.userPassword,jdbcType=VARCHAR}");
         sql.SET("is_disable = #{record.isDisable,jdbcType=INTEGER}");
+        sql.SET("is_admin = #{record.isAdmin,jdbcType=INTEGER}");
         sql.SET("create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP}");
         
         UsersExample example = (UsersExample) parameter.get("example");
@@ -202,6 +212,10 @@ public class UsersSqlProvider {
         
         if (record.getIsDisable() != null) {
             sql.SET("is_disable = #{isDisable,jdbcType=INTEGER}");
+        }
+        
+        if (record.getIsAdmin() != null) {
+            sql.SET("is_admin = #{isAdmin,jdbcType=INTEGER}");
         }
         
         if (record.getCreateDatetime() != null) {

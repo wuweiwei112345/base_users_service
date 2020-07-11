@@ -57,11 +57,11 @@ public interface UsersMapper {
         "insert into users (user_id, user_name, ",
         "user_phonenum, user_email, ",
         "user_password, is_disable, ",
-        "create_datetime)",
+        "is_admin, create_datetime)",
         "values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, ",
         "#{userPhonenum,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, ",
         "#{userPassword,jdbcType=VARCHAR}, #{isDisable,jdbcType=INTEGER}, ",
-        "#{createDatetime,jdbcType=TIMESTAMP})"
+        "#{isAdmin,jdbcType=INTEGER}, #{createDatetime,jdbcType=TIMESTAMP})"
     })
     int insert(Users record);
 
@@ -88,6 +88,7 @@ public interface UsersMapper {
         @Result(column="user_email", property="userEmail", jdbcType=JdbcType.VARCHAR),
         @Result(column="user_password", property="userPassword", jdbcType=JdbcType.VARCHAR),
         @Result(column="is_disable", property="isDisable", jdbcType=JdbcType.INTEGER),
+        @Result(column="is_admin", property="isAdmin", jdbcType=JdbcType.INTEGER),
         @Result(column="create_datetime", property="createDatetime", jdbcType=JdbcType.TIMESTAMP)
     })
     List<Users> selectByExample(UsersExample example);
@@ -100,7 +101,8 @@ public interface UsersMapper {
      */
     @Select({
         "select",
-        "user_id, user_name, user_phonenum, user_email, user_password, is_disable, create_datetime",
+        "user_id, user_name, user_phonenum, user_email, user_password, is_disable, is_admin, ",
+        "create_datetime",
         "from users",
         "where user_id = #{userId,jdbcType=INTEGER}"
     })
@@ -111,6 +113,7 @@ public interface UsersMapper {
         @Result(column="user_email", property="userEmail", jdbcType=JdbcType.VARCHAR),
         @Result(column="user_password", property="userPassword", jdbcType=JdbcType.VARCHAR),
         @Result(column="is_disable", property="isDisable", jdbcType=JdbcType.INTEGER),
+        @Result(column="is_admin", property="isAdmin", jdbcType=JdbcType.INTEGER),
         @Result(column="create_datetime", property="createDatetime", jdbcType=JdbcType.TIMESTAMP)
     })
     Users selectByPrimaryKey(Integer userId);
@@ -155,6 +158,7 @@ public interface UsersMapper {
           "user_email = #{userEmail,jdbcType=VARCHAR},",
           "user_password = #{userPassword,jdbcType=VARCHAR},",
           "is_disable = #{isDisable,jdbcType=INTEGER},",
+          "is_admin = #{isAdmin,jdbcType=INTEGER},",
           "create_datetime = #{createDatetime,jdbcType=TIMESTAMP}",
         "where user_id = #{userId,jdbcType=INTEGER}"
     })
