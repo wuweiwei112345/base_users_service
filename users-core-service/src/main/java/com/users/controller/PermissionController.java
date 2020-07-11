@@ -1,13 +1,12 @@
 package com.users.controller;
 
 import com.tools.entity.ResponseEntity;
-import com.tools.mgutil.RedisLock;
 import com.users.bean.request.*;
+import com.users.client.PermissionClient;
 import com.users.service.PermissionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,9 +21,13 @@ public class PermissionController {
     private static final Logger logger = LoggerFactory.getLogger(PermissionController.class);
 
     @Autowired
-    private RedisTemplate redisTemplate;
-    @Autowired
     private PermissionService permissionService;
+
+    @RequestMapping(value = "/fegintest",method = RequestMethod.POST)
+    public ResponseEntity feginTest(@RequestParam(value = "code") Integer code){
+        logger.info("code = " + code);
+        return permissionService.feginTest(code);
+    }
 
     @RequestMapping(value = "/addpermission",method = RequestMethod.POST)
     public ResponseEntity addPermission(AddPermissionRequestEntity entity){

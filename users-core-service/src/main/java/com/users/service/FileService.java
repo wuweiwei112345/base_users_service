@@ -6,8 +6,6 @@ import com.users.bean.request.*;
 import com.users.dao.mapper.FileMapper;
 import com.users.dao.po.File;
 import com.users.dao.po.FileExample;
-import com.users.dao.po.Permission;
-import com.users.dao.po.PermissionExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

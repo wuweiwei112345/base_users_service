@@ -1,21 +1,15 @@
 package com.users.controller;
 
 import com.tools.entity.ResponseEntity;
-import com.tools.mgutil.DateTimeUtil;
 import com.users.bean.request.AddOperRequestEntity;
 import com.users.bean.request.QueryOperRequestEntity;
 import com.users.bean.request.UpdateOperRequestEntity;
-import com.users.dao.po.Oper;
-import com.users.dao.po.OperExample;
 import com.users.service.OperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * @Auther: wuwei

@@ -15,6 +15,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @Auther: wuwei
@@ -28,6 +29,28 @@ public class PermissionService {
     private PermissionMapper permissionMapper;
     @Autowired
     private PermissionElementMapper permissionElementMapper;
+
+    private static Integer i1 = 0;
+
+    private static Integer time_param = 5000;
+
+    public ResponseEntity feginTest(Integer code){
+        //生成0、1随机数
+        Random r = new Random();
+        int ran1 = 0;//r.nextInt(2);
+        System.out.println("随机数:" + ran1);
+
+        if(ran1 == 0){
+            try {
+                Thread.sleep(time_param);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        i1 = i1 + code;
+        System.out.println("result i1 = " + i1);
+        return ResponseEntity.getFailAndCode("i1",i1);
+    }
 
     /**
      * 添加单个权限数据
