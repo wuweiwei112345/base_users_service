@@ -38,6 +38,7 @@ public class UsersService {
      * @param: String userName;//用户名(登录使用)
      * @param: String userPhonenum;//用户手机号(登录使用)
      * @param: String userPassword;//用户密码(MD5加密结果)
+     * @param: Integer isAdmin;//是否是管理员 0非管理员 1管理员
      * @return: 是否注册成功 true成功 false失败
      * @auther: wuwei
      * @date: 2020/7/11 11:03
@@ -65,7 +66,8 @@ public class UsersService {
         Users user = new Users();
         user.setUserName(entity.getUserName());
         user.setUserPassword(userPasswordByMD5);
-        user.setIsDisable(0);
+        user.setIsDisable(0);//0未禁用
+        user.setIsAdmin(entity.getIsAdmin());//0非管理员 1管理员
         user.setCreateDatetime(new Date());
         //执行用户添加
         int count = usersMapper.insert(user);
