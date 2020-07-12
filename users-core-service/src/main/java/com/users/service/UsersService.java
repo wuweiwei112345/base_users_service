@@ -230,6 +230,46 @@ public class UsersService {
     }
 
     /**
+     * 设置用户为管理员根据用户id
+     * 功能描述:设置用户为管理员根据用户id
+     * @param: Integer userId;//用户id
+     * @return: 是否设置成功 true成功 false失败
+     * @auther: wuwei
+     * @date: 2020/7/11 11:03
+     */
+    public ResponseEntity setAdminByUserId(Integer userId){
+        //验证参数
+        if(userId == null || userId <= 0){
+            return ResponseEntity.getFail("userId参数为必选!");
+        }
+        //调用用户信息修改方法
+        UpdateUserInfoByIdRequestEntity entity = new UpdateUserInfoByIdRequestEntity();
+        entity.setUserId(userId);
+        entity.setIsAdmin(1);//1用户为管理员
+        return this.updateUserInfoByUserId(entity);
+    }
+
+    /**
+     * 取消用户为管理员根据用户id
+     * 功能描述:取消用户为管理员根据用户id
+     * @param: Integer userId;//用户id
+     * @return: 是否取消成功 true成功 false失败
+     * @auther: wuwei
+     * @date: 2020/7/11 11:03
+     */
+    public ResponseEntity cancelAdminByUserId(Integer userId){
+        //验证参数
+        if(userId == null || userId <= 0){
+            return ResponseEntity.getFail("userId参数为必选!");
+        }
+        //调用用户信息修改方法
+        UpdateUserInfoByIdRequestEntity entity = new UpdateUserInfoByIdRequestEntity();
+        entity.setUserId(userId);
+        entity.setIsAdmin(0);//0用户为管理员
+        return this.updateUserInfoByUserId(entity);
+    }
+
+    /**
      * 用户信息条件查询请求参数类
      * 功能描述: 用户信息条件查询请求参数类
      * @param: Integer userId;//表记录主键id

@@ -81,6 +81,28 @@ public interface UsersClient {
     public ResponseEntity disableByUserId(@RequestParam(value = "userId") Integer userId);
 
     /**
+     * 设置用户为管理员根据用户id
+     * 功能描述:设置用户为管理员根据用户id
+     * @param: Integer userId;//用户id
+     * @return: 是否设置成功 true成功 false失败
+     * @auther: wuwei
+     * @date: 2020/7/11 11:03
+     */
+    @RequestMapping(value = "/setadminbyuserid",method = RequestMethod.POST)
+    public ResponseEntity setAdminByUserId(@RequestParam(value = "userId") Integer userId);
+
+    /**
+     * 取消用户为管理员根据用户id
+     * 功能描述:取消用户为管理员根据用户id
+     * @param: Integer userId;//用户id
+     * @return: 是否取消成功 true成功 false失败
+     * @auther: wuwei
+     * @date: 2020/7/11 11:03
+     */
+    @RequestMapping(value = "/canceladminbyuserid",method = RequestMethod.POST)
+    public ResponseEntity cancelAdminByUserId(@RequestParam(value = "userId") Integer userId);
+
+    /**
      * 用户信息条件查询请求参数类
      * 功能描述: 用户信息条件查询请求参数类
      * @param: Integer userId;//表记录主键id
