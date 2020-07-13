@@ -1,12 +1,9 @@
 package com.users.common;
 
-import com.tools.mgutil.DateTimeUtil;
 import com.tools.mgutil.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
