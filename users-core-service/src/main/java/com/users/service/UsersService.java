@@ -4,10 +4,7 @@ import com.tools.entity.ResponseEntity;
 import com.tools.mgutil.DateTimeUtil;
 import com.tools.mgutil.MD5Utils;
 import com.tools.mgutil.RegUtil;
-import com.users.bean.request.LoginRequestEntity;
-import com.users.bean.request.RegisterUserInfoRequestEntity;
-import com.users.bean.request.SelectUsersListByConditionRequestEntity;
-import com.users.bean.request.UpdateUserInfoByIdRequestEntity;
+import com.users.bean.request.*;
 import com.users.common.RedisLoginTokenCommon;
 import com.users.dao.mapper.UsersMapper;
 import com.users.dao.po.Users;
@@ -62,6 +59,13 @@ public class UsersService {
         }
         if(entity.getUserPhonenum() == null || "".equals(entity.getUserPhonenum())){
             return ResponseEntity.getFail("userPhonenum参数为必选!");
+        }
+        //检查排重
+        SelectUsersListByConditionRequestEntity queryEntity = new SelectUsersListByConditionRequestEntity();
+        queryEntity.setUserName(entity.getUserName());
+        ResponseEntity responseEntity = this.selectUsersListByCondition(queryEntity);
+        if(!(CollectionUtils.isEmpty(responseEntity.getDataList()))){
+            return ResponseEntity.getFailAndCode("重复添加!",100002);
         }
         //将密码进行MD5加密
         String userPasswordByMD5 = MD5Utils.getMD5(entity.getUserPassword());

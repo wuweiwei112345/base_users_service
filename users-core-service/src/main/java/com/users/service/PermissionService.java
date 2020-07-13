@@ -76,11 +76,20 @@ public class PermissionService {
         if(entity.getIsDisable() == null || !(entity.getIsDisable() == 0 || entity.getIsDisable() == 1)){
             return ResponseEntity.getFail("isDisable不能为空或需合法(0、1)!");
         }
+        //检查排重
+        QueryPermissionRequestEntity queryEntity = new QueryPermissionRequestEntity();
+        queryEntity.setPermissionKey(entity.getPermissionKey());//权限key
+        queryEntity.setPermissionName(entity.getPermissionName());//权限名称
+        ResponseEntity responseEntity = this.queryPermissionByCondition(queryEntity);
+        if(!(CollectionUtils.isEmpty(responseEntity.getDataList()))){
+            return ResponseEntity.getFailAndCode("重复添加!",100002);
+        }
         //执行数据操作
         Date currentDateTime = new Date();//获取当前服务器时间
         //构建添加数据实体
         Permission permission = new Permission();
         permission.setPermissionName(entity.getPermissionName());//权限名称
+        permission.setPermissionKey(entity.getPermissionKey());//权限key
         permission.setPermissionDescribe(entity.getPermissionDescribe());//权限描述
         permission.setCreateDatetime(currentDateTime);//创建时间
         permission.setUpdateDatetime(currentDateTime);//修改时间
@@ -118,6 +127,10 @@ public class PermissionService {
         //权限名称
         if(entity.getPermissionName() != null && !("".equals(entity.getPermissionName()))){
             criteria.andPermissionNameLike("%" + entity.getPermissionName()  + "%");
+        }
+        //权限key
+        if(entity.getPermissionKey() != null && !("".equals(entity.getPermissionKey()))){
+            criteria.andPermissionKeyLike(entity.getPermissionKey());
         }
         //权限描述
         if(entity.getPermissionDescribe() != null && !("".equals(entity.getPermissionDescribe()))){
@@ -199,6 +212,9 @@ public class PermissionService {
         if(entity.getPermissionName() == null || "".equals(entity.getPermissionName())){
             return ResponseEntity.getFail("permissionName不能为空!");
         }
+        if(entity.getPermissionKey() == null || "".equals(entity.getPermissionKey())){
+            return ResponseEntity.getFail("permissionKey不能为空!");
+        }
         if(entity.getIsDisable() == null || !(entity.getIsDisable() == 0 || entity.getIsDisable() == 1)){
             return ResponseEntity.getFail("isDisable不能为空或需合法(0、1)!");
         }
@@ -208,6 +224,7 @@ public class PermissionService {
         Permission permission = new Permission();
         permission.setPermissionId(entity.getPermissionId());//权限id
         permission.setPermissionName(entity.getPermissionName());//权限名称
+        permission.setPermissionKey(entity.getPermissionKey());//权限名称
         permission.setPermissionDescribe(entity.getPermissionDescribe());//权限描述
         permission.setIsDisable(entity.getIsDisable());//启用禁用
         permission.setUpdateDatetime(currentDateTime);//修改时间
@@ -254,7 +271,7 @@ public class PermissionService {
         PermissionElement permissionElement = new PermissionElement();
         permissionElement.setPermissionId(entity.getPermissionId());//权限id
         permissionElement.setElementId(entity.getElementId());//权限关联元素id
-        permissionElement.setElementType(entity.getElementType());//权限关联子元素类型(菜单1、页面元素2、文件3、功能4)					0	0	0	0	0	0	0
+        permissionElement.setElementType(entity.getElementType());//权限关联子元素类型(菜单1、页面元素2、文件3、功能4)
         permissionElement.setCreateDatetime(currentDateTime);//创建时间
         int count = permissionElementMapper.insert(permissionElement);
         //返回逻辑

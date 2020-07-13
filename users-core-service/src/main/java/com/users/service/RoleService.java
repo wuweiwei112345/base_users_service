@@ -3,6 +3,7 @@ package com.users.service;
 import com.tools.entity.ResponseEntity;
 import com.tools.mgutil.DateTimeUtil;
 import com.users.bean.request.AddRoleInfoRequestEntity;
+import com.users.bean.request.QueryPermissionRequestEntity;
 import com.users.bean.request.SelectRoleInfoByConditionRequestEntity;
 import com.users.bean.request.UpdateRoleInfoByIdRequestEntity;
 import com.users.dao.mapper.RoleMapper;
@@ -10,6 +11,7 @@ import com.users.dao.po.Role;
 import com.users.dao.po.RoleExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -44,6 +46,13 @@ public class RoleService {
         }
         if(entity.getRoleDescribe() == null || "".equals(entity.getRoleDescribe())){
             return ResponseEntity.getFail("roleDescribe参数为必选!");
+        }
+        //检查排重
+        SelectRoleInfoByConditionRequestEntity queryEntity = new SelectRoleInfoByConditionRequestEntity();
+        queryEntity.setRoleName(entity.getRoleName());//角色名称
+        ResponseEntity responseEntity = this.selectRoleInfoByCondition(queryEntity);
+        if(!(CollectionUtils.isEmpty(responseEntity.getDataList()))){
+            return ResponseEntity.getFailAndCode("重复添加!",100002);
         }
         //获取当前时间
         Date currentDateTime = new Date();

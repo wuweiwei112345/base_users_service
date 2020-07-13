@@ -3,6 +3,7 @@ package com.users.service;
 import com.tools.entity.ResponseEntity;
 import com.tools.mgutil.DateTimeUtil;
 import com.users.bean.request.AddPageElementRequestEntity;
+import com.users.bean.request.QueryOperRequestEntity;
 import com.users.bean.request.QueryPageElementRequestEntity;
 import com.users.bean.request.UpdatePageElementRequestEntity;
 import com.users.dao.mapper.PageElementMapper;
@@ -10,6 +11,7 @@ import com.users.dao.po.PageElement;
 import com.users.dao.po.PageElementExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -45,6 +47,13 @@ public class PageElementService {
         }
         if(entity.getIsDisable() == null || !(entity.getIsDisable() == 0 || entity.getIsDisable() == 1)){
             return ResponseEntity.getFail("isDisable不能为空或需合法(0、1)!");
+        }
+        //检查排重
+        QueryPageElementRequestEntity queryEntity = new QueryPageElementRequestEntity();
+        queryEntity.setPageElementCode(entity.getPageElementCode());
+        ResponseEntity responseEntity = this.queryFileByCondition(queryEntity);
+        if(!(CollectionUtils.isEmpty(responseEntity.getDataList()))){
+            return ResponseEntity.getFailAndCode("重复添加!",100002);
         }
         //执行数据操作
         Date currentDateTime = new Date();//获取当前服务器时间

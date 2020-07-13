@@ -3,6 +3,7 @@ package com.users.service;
 import com.tools.entity.ResponseEntity;
 import com.tools.mgutil.DateTimeUtil;
 import com.users.bean.request.AddOperRequestEntity;
+import com.users.bean.request.QueryMenuRequestEntity;
 import com.users.bean.request.QueryOperRequestEntity;
 import com.users.bean.request.UpdateOperRequestEntity;
 import com.users.dao.mapper.OperMapper;
@@ -10,6 +11,7 @@ import com.users.dao.po.Oper;
 import com.users.dao.po.OperExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -59,6 +61,16 @@ public class OperService {
                 !(entity.getIsDisable().intValue() == 0 ||
                 entity.getIsDisable().intValue() == 1)){
             return ResponseEntity.getFail("isDisable参数为必选!");
+        }
+        //检查排重
+        QueryOperRequestEntity queryEntity = new QueryOperRequestEntity();
+        queryEntity.setParentOperId(entity.getParentOperId());
+        queryEntity.setOperName(entity.getOperName());
+        queryEntity.setOperCode(entity.getOperCode());
+        queryEntity.setOperUrl(entity.getOperUrl());
+        ResponseEntity responseEntity = this.queryOperByCondition(queryEntity);
+        if(!(CollectionUtils.isEmpty(responseEntity.getDataList()))){
+            return ResponseEntity.getFailAndCode("重复添加!",100002);
         }
         //执行添加
         Date currentDateTime = new Date();
