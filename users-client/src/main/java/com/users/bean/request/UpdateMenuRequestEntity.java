@@ -11,12 +11,19 @@ import java.util.Date;
  */
 public class UpdateMenuRequestEntity extends RequestBaseEntity {
 
+    private Integer menuParentId;//父菜单id
     private Integer menuId;//表记录主键id
     private String menuName;//菜单名称
     private String menuDescribe;//菜单描述
     private Integer isDisable;//启用1禁用
-    private Date createDatetime;//创建时间
-    private Date updateDatetime;//最后修改时间
+
+    public Integer getMenuParentId() {
+        return menuParentId;
+    }
+
+    public void setMenuParentId(Integer menuParentId) {
+        this.menuParentId = menuParentId;
+    }
 
     public Integer getMenuId() {
         return menuId;
@@ -48,22 +55,6 @@ public class UpdateMenuRequestEntity extends RequestBaseEntity {
 
     public void setIsDisable(Integer isDisable) {
         this.isDisable = isDisable;
-    }
-
-    public Date getCreateDatetime() {
-        return createDatetime;
-    }
-
-    public void setCreateDatetime(Date createDatetime) {
-        this.createDatetime = createDatetime;
-    }
-
-    public Date getUpdateDatetime() {
-        return updateDatetime;
-    }
-
-    public void setUpdateDatetime(Date updateDatetime) {
-        this.updateDatetime = updateDatetime;
     }
 
 }

@@ -9,6 +9,7 @@ import com.tools.entity.RequestBaseEntity;
  */
 public class QueryMenuRequestEntity extends RequestBaseEntity {
 
+    private Integer menuParentId;//父菜单id
     private Integer menuId;//表记录主键id
     private String menuName;//菜单名称
     private String menuDescribe;//菜单描述
@@ -17,6 +18,14 @@ public class QueryMenuRequestEntity extends RequestBaseEntity {
     private String createDatetimeEnd;//创建时间
     private String updateDatetimeStart;//最后修改时间
     private String updateDatetimeEnd;//最后修改时间
+
+    public Integer getMenuParentId() {
+        return menuParentId;
+    }
+
+    public void setMenuParentId(Integer menuParentId) {
+        this.menuParentId = menuParentId;
+    }
 
     public Integer getMenuId() {
         return menuId;
