@@ -122,7 +122,7 @@ public class UsersService {
             if(MD5Utils.getMD5(entity.getUserPassword()).equals(users.getUserPassword())){
                 String userId = users.getUserId().toString();
                 //生成用户登录token
-                String token = redisLoginTokenCommon.createLoginUser(userId);
+                String token = redisLoginTokenCommon.createLoginToken(userId);
                 //设置token到redis数据库
                 boolean bool = redisLoginTokenCommon.setLoginToken(userId,token);
                 //组装返回数据

@@ -30,7 +30,7 @@ public class RedisLoginTokenCommon {
      * @auther: wuwei
      * @date: 2020/7/11 16:08
      */
-    public static String createLoginUser(String userId){
+    public static String createLoginToken(String userId){
         String value = userId.concat(String.valueOf(System.currentTimeMillis()));
         return MD5Utils.getMD5(value);
     }
