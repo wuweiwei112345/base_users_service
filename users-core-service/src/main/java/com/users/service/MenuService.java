@@ -7,7 +7,7 @@ import com.users.dao.mapper.MenuMapper;
 import com.users.dao.po.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.util.CollectionUtils;
 import java.util.Date;
 import java.util.List;
 
@@ -26,11 +26,10 @@ public class MenuService {
      * 添加单个菜单数据
      * 功能描述: 添加单个菜单数据
      * @param: entity 单个权限数据实体
+     *          Integer menuParentId;//父菜单id
      *          String menuName;//菜单名称
      *          String menuDescribe;//菜单描述
      *          Integer isDisable;//启用1禁用
-     *          Date createDatetime;//创建时间
-     *          Date updateDatetime;//最后修改时间
      * @return: 统一响应实体ResponseEntity
      * @auther: wuwei
      * @date: 2020/6/28 15:07
@@ -39,6 +38,9 @@ public class MenuService {
         //参数检查
         if(entity == null){
             return ResponseEntity.getFail("数据为空!");
+        }
+        if(entity.getMenuParentId() == null || entity.getMenuParentId().intValue() < 0){
+            return ResponseEntity.getFail("menuParentId不能为空或需合法!");
         }
         if(entity.getMenuName() == null || "".equals(entity.getMenuName())){
             return ResponseEntity.getFail("menuName不能为空!");
@@ -49,16 +51,26 @@ public class MenuService {
         if(entity.getIsDisable() == null || !(entity.getIsDisable() == 0 || entity.getIsDisable() == 1)){
             return ResponseEntity.getFail("isDisable不能为空或需合法(0、1)!");
         }
+        //检查排重
+        QueryMenuRequestEntity queryEntity = new QueryMenuRequestEntity();
+        queryEntity.setMenuParentId(entity.getMenuParentId());//父级id
+        queryEntity.setMenuName(entity.getMenuName());//菜单名称
+        ResponseEntity responseEntity = this.queryMenuByCondition(queryEntity);
+        if(!(CollectionUtils.isEmpty(responseEntity.getDataList()))){
+            return ResponseEntity.getFailAndCode("重复添加!",100002);
+        }
         //执行数据操作
         Date currentDateTime = new Date();//获取当前服务器时间
         //构建添加数据实体
         Menu menu = new Menu();
+        menu.setMenuParentId(entity.getMenuParentId());//父菜单id
         menu.setMenuName(entity.getMenuName());//菜单名称
         menu.setMenuDescribe(entity.getMenuDescribe());//菜单描述
         menu.setIsDisable(entity.getIsDisable());//启用禁用
         menu.setCreateDatetime(currentDateTime);//创建时间
         menu.setUpdateDatetime(currentDateTime);//修改时间
-        int count = menuMapper.insert(menu);//执行添加
+        //执行添加
+        int count = menuMapper.insert(menu);
         //返回逻辑
         if(count > 0){
             return ResponseEntity.getSuccess(null);
@@ -71,6 +83,7 @@ public class MenuService {
      * 条件查询菜单数据
      * 功能描述: 条件查询菜单数据
      * @param: entity 条件查询参数实体
+     *      Integer menuParentId;//父菜单id
      *      Integer menuId;//表记录主键id
      *      String menuName;//菜单名称
      *      String menuDescribe;//菜单描述
@@ -90,6 +103,10 @@ public class MenuService {
         }
         //判断传入的查询条件并拼接
         MenuExample.Criteria criteria = example.createCriteria();
+        //菜单父id
+        if(entity.getMenuParentId() != null && entity.getMenuParentId().intValue() > 0){
+            criteria.andMenuParentIdEqualTo(entity.getMenuParentId());
+        }
         //表记录主键
         if(entity.getMenuId() != null && entity.getMenuId().intValue() > 0){
             criteria.andMenuIdEqualTo(entity.getMenuId());
@@ -130,6 +147,7 @@ public class MenuService {
         }
         //执行查询
         List<Menu> list = menuMapper.selectByExample(example);
+        //返回
         return ResponseEntity.getSuccessByListData(null,list);
     }
 
@@ -159,6 +177,7 @@ public class MenuService {
      * 修改单个菜单数据
      * 功能描述: 修改单个菜单数据
      * @param: entity 单个权限数据实体
+     *          Integer menuParentId;//父菜单id
      *          Integer menuId;//表记录主键id
      *          String menuName;//菜单名称
      *          String menuDescribe;//菜单描述
@@ -171,6 +190,9 @@ public class MenuService {
         //参数检查
         if(entity == null){
             return ResponseEntity.getFail("数据为空!");
+        }
+        if(entity.getMenuParentId() == null || entity.getMenuParentId().intValue() <= 0){
+            return ResponseEntity.getFail("menuParentId不能为空!");
         }
         if(entity.getMenuId() == null || entity.getMenuId().intValue() <= 0){
             return ResponseEntity.getFail("menuId不能为空!");
@@ -188,6 +210,7 @@ public class MenuService {
         Date currentDateTime = new Date();//获取当前服务器时间
         //构建添加数据实体
         Menu menu = new Menu();
+        menu.setMenuParentId(entity.getMenuParentId());//菜单父级id
         menu.setMenuId(entity.getMenuId());//菜单id
         menu.setMenuName(entity.getMenuName());//菜单名称
         menu.setMenuDescribe(entity.getMenuDescribe());//菜单描述
