@@ -8,6 +8,7 @@ import com.users.dao.po.File;
 import com.users.dao.po.FileExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -46,6 +47,13 @@ public class FileService {
         }
         if(entity.getIsDisable() == null || !(entity.getIsDisable() == 0 || entity.getIsDisable() == 1)){
             return ResponseEntity.getFail("isDisable不能为空或需合法(0、1)!");
+        }
+        //检查排重
+        QueryFileRequestEntity queryEntity = new QueryFileRequestEntity();
+        queryEntity.setFilePath(entity.getFilePath());
+        ResponseEntity responseEntity = this.queryFileByCondition(queryEntity);
+        if(!(CollectionUtils.isEmpty(responseEntity.getDataList()))){
+            return ResponseEntity.getFailAndCode("重复添加!",100002);
         }
         //执行数据操作
         Date currentDateTime = new Date();//获取当前服务器时间
