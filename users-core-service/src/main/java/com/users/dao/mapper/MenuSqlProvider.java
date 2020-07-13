@@ -50,6 +50,10 @@ public class MenuSqlProvider {
             sql.VALUES("menu_id", "#{menuId,jdbcType=INTEGER}");
         }
         
+        if (record.getMenuParentId() != null) {
+            sql.VALUES("menu_parent_id", "#{menuParentId,jdbcType=INTEGER}");
+        }
+        
         if (record.getMenuName() != null) {
             sql.VALUES("menu_name", "#{menuName,jdbcType=VARCHAR}");
         }
@@ -86,6 +90,7 @@ public class MenuSqlProvider {
         } else {
             sql.SELECT("menu_id");
         }
+        sql.SELECT("menu_parent_id");
         sql.SELECT("menu_name");
         sql.SELECT("menu_describe");
         sql.SELECT("is_disable");
@@ -116,6 +121,10 @@ public class MenuSqlProvider {
         
         if (record.getMenuId() != null) {
             sql.SET("menu_id = #{record.menuId,jdbcType=INTEGER}");
+        }
+        
+        if (record.getMenuParentId() != null) {
+            sql.SET("menu_parent_id = #{record.menuParentId,jdbcType=INTEGER}");
         }
         
         if (record.getMenuName() != null) {
@@ -153,6 +162,7 @@ public class MenuSqlProvider {
         sql.UPDATE("menu");
         
         sql.SET("menu_id = #{record.menuId,jdbcType=INTEGER}");
+        sql.SET("menu_parent_id = #{record.menuParentId,jdbcType=INTEGER}");
         sql.SET("menu_name = #{record.menuName,jdbcType=VARCHAR}");
         sql.SET("menu_describe = #{record.menuDescribe,jdbcType=VARCHAR}");
         sql.SET("is_disable = #{record.isDisable,jdbcType=INTEGER}");
@@ -173,6 +183,10 @@ public class MenuSqlProvider {
     public String updateByPrimaryKeySelective(Menu record) {
         SQL sql = new SQL();
         sql.UPDATE("menu");
+        
+        if (record.getMenuParentId() != null) {
+            sql.SET("menu_parent_id = #{menuParentId,jdbcType=INTEGER}");
+        }
         
         if (record.getMenuName() != null) {
             sql.SET("menu_name = #{menuName,jdbcType=VARCHAR}");

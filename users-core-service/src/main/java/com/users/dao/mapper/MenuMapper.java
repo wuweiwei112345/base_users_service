@@ -54,12 +54,14 @@ public interface MenuMapper {
      * @mbg.generated
      */
     @Insert({
-        "insert into menu (menu_id, menu_name, ",
-        "menu_describe, is_disable, ",
-        "create_datetime, update_datetime)",
-        "values (#{menuId,jdbcType=INTEGER}, #{menuName,jdbcType=VARCHAR}, ",
-        "#{menuDescribe,jdbcType=VARCHAR}, #{isDisable,jdbcType=INTEGER}, ",
-        "#{createDatetime,jdbcType=TIMESTAMP}, #{updateDatetime,jdbcType=TIMESTAMP})"
+        "insert into menu (menu_id, menu_parent_id, ",
+        "menu_name, menu_describe, ",
+        "is_disable, create_datetime, ",
+        "update_datetime)",
+        "values (#{menuId,jdbcType=INTEGER}, #{menuParentId,jdbcType=INTEGER}, ",
+        "#{menuName,jdbcType=VARCHAR}, #{menuDescribe,jdbcType=VARCHAR}, ",
+        "#{isDisable,jdbcType=INTEGER}, #{createDatetime,jdbcType=TIMESTAMP}, ",
+        "#{updateDatetime,jdbcType=TIMESTAMP})"
     })
     int insert(Menu record);
 
@@ -81,6 +83,7 @@ public interface MenuMapper {
     @SelectProvider(type=MenuSqlProvider.class, method="selectByExample")
     @Results({
         @Result(column="menu_id", property="menuId", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="menu_parent_id", property="menuParentId", jdbcType=JdbcType.INTEGER),
         @Result(column="menu_name", property="menuName", jdbcType=JdbcType.VARCHAR),
         @Result(column="menu_describe", property="menuDescribe", jdbcType=JdbcType.VARCHAR),
         @Result(column="is_disable", property="isDisable", jdbcType=JdbcType.INTEGER),
@@ -97,12 +100,14 @@ public interface MenuMapper {
      */
     @Select({
         "select",
-        "menu_id, menu_name, menu_describe, is_disable, create_datetime, update_datetime",
+        "menu_id, menu_parent_id, menu_name, menu_describe, is_disable, create_datetime, ",
+        "update_datetime",
         "from menu",
         "where menu_id = #{menuId,jdbcType=INTEGER}"
     })
     @Results({
         @Result(column="menu_id", property="menuId", jdbcType=JdbcType.INTEGER, id=true),
+        @Result(column="menu_parent_id", property="menuParentId", jdbcType=JdbcType.INTEGER),
         @Result(column="menu_name", property="menuName", jdbcType=JdbcType.VARCHAR),
         @Result(column="menu_describe", property="menuDescribe", jdbcType=JdbcType.VARCHAR),
         @Result(column="is_disable", property="isDisable", jdbcType=JdbcType.INTEGER),
@@ -146,7 +151,8 @@ public interface MenuMapper {
      */
     @Update({
         "update menu",
-        "set menu_name = #{menuName,jdbcType=VARCHAR},",
+        "set menu_parent_id = #{menuParentId,jdbcType=INTEGER},",
+          "menu_name = #{menuName,jdbcType=VARCHAR},",
           "menu_describe = #{menuDescribe,jdbcType=VARCHAR},",
           "is_disable = #{isDisable,jdbcType=INTEGER},",
           "create_datetime = #{createDatetime,jdbcType=TIMESTAMP},",

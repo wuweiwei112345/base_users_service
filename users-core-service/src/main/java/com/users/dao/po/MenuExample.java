@@ -255,6 +255,66 @@ public class MenuExample {
             return (Criteria) this;
         }
 
+        public Criteria andMenuParentIdIsNull() {
+            addCriterion("menu_parent_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuParentIdIsNotNull() {
+            addCriterion("menu_parent_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuParentIdEqualTo(Integer value) {
+            addCriterion("menu_parent_id =", value, "menuParentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuParentIdNotEqualTo(Integer value) {
+            addCriterion("menu_parent_id <>", value, "menuParentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuParentIdGreaterThan(Integer value) {
+            addCriterion("menu_parent_id >", value, "menuParentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuParentIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("menu_parent_id >=", value, "menuParentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuParentIdLessThan(Integer value) {
+            addCriterion("menu_parent_id <", value, "menuParentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuParentIdLessThanOrEqualTo(Integer value) {
+            addCriterion("menu_parent_id <=", value, "menuParentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuParentIdIn(List<Integer> values) {
+            addCriterion("menu_parent_id in", values, "menuParentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuParentIdNotIn(List<Integer> values) {
+            addCriterion("menu_parent_id not in", values, "menuParentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuParentIdBetween(Integer value1, Integer value2) {
+            addCriterion("menu_parent_id between", value1, value2, "menuParentId");
+            return (Criteria) this;
+        }
+
+        public Criteria andMenuParentIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("menu_parent_id not between", value1, value2, "menuParentId");
+            return (Criteria) this;
+        }
+
         public Criteria andMenuNameIsNull() {
             addCriterion("menu_name is null");
             return (Criteria) this;
