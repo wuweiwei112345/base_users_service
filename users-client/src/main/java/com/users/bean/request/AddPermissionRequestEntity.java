@@ -12,6 +12,7 @@ import java.util.Date;
 public class AddPermissionRequestEntity extends RequestBaseEntity {
 
     private String permissionName;//权限名称
+    private String permissionKey;//权限key
     private String permissionDescribe;//权限描述
     private Integer isDisable;//0启用1禁用
     private Date create_datetime;//创建时间
@@ -55,5 +56,13 @@ public class AddPermissionRequestEntity extends RequestBaseEntity {
 
     public void setUpdate_datetime(Date update_datetime) {
         this.update_datetime = update_datetime;
+    }
+
+    public String getPermissionKey() {
+        return permissionKey;
+    }
+
+    public void setPermissionKey(String permissionKey) {
+        this.permissionKey = permissionKey;
     }
 }
