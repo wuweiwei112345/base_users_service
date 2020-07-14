@@ -1,11 +1,9 @@
 package com.users.controller;
 
 import com.tools.entity.ResponseEntity;
-import com.users.bean.request.LoginRequestEntity;
-import com.users.bean.request.RegisterUserInfoRequestEntity;
-import com.users.bean.request.SelectUsersListByConditionRequestEntity;
-import com.users.bean.request.UpdateUserInfoByIdRequestEntity;
+import com.users.bean.request.*;
 import com.users.common.RedisDisLocksCommon;
+import com.users.dao.po.UserRole;
 import com.users.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -156,6 +154,34 @@ public class UsersController {
     @RequestMapping(value = "/selectuserslistbycondition",method = RequestMethod.POST)
     public ResponseEntity selectUsersListByCondition(SelectUsersListByConditionRequestEntity entity){
         return usersService.selectUsersListByCondition(entity);
+    }
+
+    /**
+     * 设置用户角色之间的关系
+     * 功能描述: 设置用户角色之间的关系
+     * @param: Integer userId;//用户id
+     * @param: Integer roleId;//角色id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    @RequestMapping(value = "/setuserrole",method = RequestMethod.POST)
+    public ResponseEntity setUserRole(SetUserRoleRequestEntity entity){
+        return usersService.setUserRole(entity);
+    }
+
+    /**
+     * 解除用户角色之间的关系
+     * 功能描述: 解除用户角色之间的关系
+     * @param: Integer userId;//用户id
+     * @param: Integer roleId;//角色id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    @RequestMapping(value = "/deleteuserrole",method = RequestMethod.POST)
+    public ResponseEntity deleteUserRole(DeleteUserRoleRequestEntity entity){
+        return usersService.deleteUserRole(entity);
     }
 
 }
