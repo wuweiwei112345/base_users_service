@@ -3,6 +3,8 @@ package com.users.common;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @Auther: wuwei
  * @Date: 2020/7/13 16:40
@@ -14,6 +16,7 @@ public class RedisDisLocksCommon {
     private String keyValue;
     private Integer retryNum = 3;//默认尝试次数3
     private Long sleepTime = 1000L;//获取锁失败睡眠时间(毫秒)
+    private Long expireTime = 5000L;//锁默认过期时间(毫秒)
 
     private final static String KEY_TEMPLE = "redis.dis.lock:{value}";
 
@@ -83,6 +86,8 @@ public class RedisDisLocksCommon {
                     continue;
                 }else{
                     System.out.println(keyValue + "加锁成功!");
+                    //为锁设置过期时间
+                    template.expire(keyValue,expireTime,TimeUnit.MILLISECONDS);
                     return true;
                 }
             }
