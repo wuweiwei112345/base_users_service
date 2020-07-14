@@ -6,7 +6,10 @@ import com.tools.mgutil.MD5Utils;
 import com.tools.mgutil.RegUtil;
 import com.users.bean.request.*;
 import com.users.common.RedisLoginTokenCommon;
+import com.users.dao.mapper.UserRoleMapper;
 import com.users.dao.mapper.UsersMapper;
+import com.users.dao.po.UserRole;
+import com.users.dao.po.UserRoleExample;
 import com.users.dao.po.Users;
 import com.users.dao.po.UsersExample;
 import org.apache.commons.lang3.StringUtils;
@@ -29,6 +32,8 @@ public class UsersService {
 
     @Autowired
     private UsersMapper usersMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
     @Autowired
     private RedisLoginTokenCommon redisLoginTokenCommon;
 
@@ -327,6 +332,75 @@ public class UsersService {
         List<Users> list = usersMapper.selectByExample(usersExample);
         //返回数据
         return ResponseEntity.getSuccessByEntity(null,list);
+    }
+
+    /**
+     * 设置用户角色之间的关系
+     * 功能描述: 设置用户角色之间的关系
+     * @param: Integer userId;//用户id
+     * @param: Integer roleId;//角色id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    public ResponseEntity setUserRole(SetUserRoleRequestEntity entity){
+        //参数检查
+        if(entity == null){
+            return ResponseEntity.getFail("请传入参数!");
+        }
+        if(entity.getUserId() == null || entity.getUserId().intValue() <= 0){
+            return ResponseEntity.getFail("userId参数为必选!");
+        }
+        if(entity.getRoleId() == null || entity.getRoleId().intValue() <= 0){
+            return ResponseEntity.getFail("roleId参数为必选!");
+        }
+        //组装添加实体
+        UserRole userRole = new UserRole();
+        userRole.setUserId(entity.getUserId());
+        userRole.setRoleId(entity.getRoleId());
+        //执行添加
+        int count = userRoleMapper.insert(userRole);
+        //返回逻辑
+        if(count > 0){
+            return ResponseEntity.getSuccess(null);
+        }else{
+            return ResponseEntity.getFail(null);
+        }
+    }
+
+    /**
+     * 解除用户角色之间的关系
+     * 功能描述: 解除用户角色之间的关系
+     * @param: Integer userId;//用户id
+     * @param: Integer roleId;//角色id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    public ResponseEntity deleteUserRole(DeleteUserRoleRequestEntity entity){
+        //参数检查
+        if(entity == null){
+            return ResponseEntity.getFail("请传入参数!");
+        }
+        if(entity.getUserId() == null || entity.getUserId().intValue() <= 0){
+            return ResponseEntity.getFail("userId参数为必选!");
+        }
+        if(entity.getRoleId() == null || entity.getRoleId().intValue() <= 0){
+            return ResponseEntity.getFail("roleId参数为必选!");
+        }
+        //组装查询条件实体
+        UserRoleExample example = new UserRoleExample();
+        UserRoleExample.Criteria criteria = example.createCriteria();
+        criteria.andUserIdEqualTo(entity.getUserId());
+        criteria.andRoleIdEqualTo(entity.getRoleId());
+        //执行添加
+        int count = userRoleMapper.deleteByExample(example);
+        //返回逻辑
+        if(count > 0){
+            return ResponseEntity.getSuccess(null);
+        }else{
+            return ResponseEntity.getFail(null);
+        }
     }
 
 }
