@@ -10,17 +10,40 @@ import org.springframework.stereotype.Service;
  */
 public class RedisDisLocksCommon {
 
-    private final StringRedisTemplate template;
-    private final String keyValue;
+    private StringRedisTemplate template;
+    private String keyValue;
+    private Integer retryNum = 3;//默认尝试次数3
 
     private final static String KEY_TEMPLE = "redis.dis.lock:{value}";
 
-    public RedisDisLocksCommon(StringRedisTemplate template,String value)throws IllegalArgumentException{
-        if(template == null || value == null || "".equals(value)){
-            throw new IllegalArgumentException("参数不能为空!");
+    public String stringToNum(String value){
+        if(value == null || "".equals(value)){
+            return null;
         }
-        this.template = template;
-        this.keyValue = KEY_TEMPLE.replace("{value}",value);
+        //将string字符串转换为数字字符串
+        StringBuffer sb = new StringBuffer();
+        char[] charArr = value.toCharArray();
+        int charLen = charArr.length;
+        for (int i = 0 ; i < charLen ; i++) {
+            char a = charArr[i];
+            int a1 = a;
+            sb.append(a1);
+        }
+        return sb.toString();
+    }
+
+    public RedisDisLocksCommon(StringRedisTemplate template,String value){
+        if(template != null && value != null && !("".equals(value))){
+            this.template = template;
+            this.keyValue = KEY_TEMPLE.replace("{value}",stringToNum(value));
+        }
+    }
+
+    public RedisDisLocksCommon(StringRedisTemplate template,String value,Integer retryNum){
+        this(template,value);
+        if(retryNum != null && retryNum.intValue() > 0){
+            this.retryNum = retryNum;
+        }
     }
 
     public boolean getLock(){
@@ -29,7 +52,13 @@ public class RedisDisLocksCommon {
             while(true){
                 //获取锁(设置setnx方式key=1)
                 boolean bool = template.opsForValue().setIfAbsent(keyValue,"1");
+                //尝试获取锁次数递减1
+                retryNum--;
                 if(!bool){
+                    //尝试次数==0则直接返回失败(为0表示没有再次尝试的机会,直接返回失败即可)
+                    if(retryNum == 0){
+                        return false;
+                    }
                     //如果没获取到锁则睡眠1秒
                     System.out.println(keyValue + "加锁失败.开始睡眠!");
                     Thread.sleep(1000L);
