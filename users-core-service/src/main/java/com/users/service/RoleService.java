@@ -2,13 +2,10 @@ package com.users.service;
 
 import com.tools.entity.ResponseEntity;
 import com.tools.mgutil.DateTimeUtil;
-import com.users.bean.request.AddRoleInfoRequestEntity;
-import com.users.bean.request.QueryPermissionRequestEntity;
-import com.users.bean.request.SelectRoleInfoByConditionRequestEntity;
-import com.users.bean.request.UpdateRoleInfoByIdRequestEntity;
+import com.users.bean.request.*;
 import com.users.dao.mapper.RoleMapper;
-import com.users.dao.po.Role;
-import com.users.dao.po.RoleExample;
+import com.users.dao.mapper.RolePermissionMapper;
+import com.users.dao.po.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -26,6 +23,8 @@ public class RoleService {
 
     @Autowired
     private RoleMapper roleMapper;
+    @Autowired
+    private RolePermissionMapper rolePermissionMapper;
 
     /**
      * 添加角色信息
@@ -199,6 +198,97 @@ public class RoleService {
         }else{
             return ResponseEntity.getFail(null);
         }
+    }
+
+    /**
+     * 设置角色权限之间的关系
+     * 功能描述: 设置角色权限之间的关系
+     * @param: Integer roleId;//角色id
+     * @param: Integer permissionId;//权限id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    public ResponseEntity setRolePermission(SetRolePermissionRequestEntity entity){
+        //参数检查
+        if(entity == null){
+            return ResponseEntity.getFail("请传入参数!");
+        }
+        if(entity.getRoleId() == null || entity.getRoleId().intValue() <= 0){
+            return ResponseEntity.getFail("roleId参数为必选!");
+        }
+        if(entity.getPermissionId() == null || entity.getPermissionId().intValue() <= 0){
+            return ResponseEntity.getFail("permissionId参数为必选!");
+        }
+        //组装添加实体
+        RolePermission rolePermission = new RolePermission();
+        rolePermission.setRoleId(entity.getRoleId());
+        rolePermission.setPermissionId(entity.getPermissionId());
+        //执行添加
+        int count = rolePermissionMapper.insert(rolePermission);
+        //返回逻辑
+        if(count > 0){
+            return ResponseEntity.getSuccess(null);
+        }else{
+            return ResponseEntity.getFail(null);
+        }
+    }
+
+    /**
+     * 解除角色权限之间的关系
+     * 功能描述: 解除角色权限之间的关系
+     * @param: Integer roleId;//角色id
+     * @param: Integer permissionId;//权限id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    public ResponseEntity deleteRolePermission(DeleteRolePermissionRequestEntity entity){
+        //参数检查
+        if(entity == null){
+            return ResponseEntity.getFail("请传入参数!");
+        }
+        if(entity.getRoleId() == null || entity.getRoleId().intValue() <= 0){
+            return ResponseEntity.getFail("roleId参数为必选!");
+        }
+        if(entity.getPermissionId() == null || entity.getPermissionId().intValue() <= 0){
+            return ResponseEntity.getFail("permissionId参数为必选!");
+        }
+        //组装查询条件实体
+        RolePermissionExample example = new RolePermissionExample();
+        RolePermissionExample.Criteria criteria = example.createCriteria();
+        criteria.andPermissionIdEqualTo(entity.getPermissionId());
+        criteria.andRoleIdEqualTo(entity.getRoleId());
+        //执行添加
+        int count = rolePermissionMapper.deleteByExample(example);
+        //返回逻辑
+        if(count > 0){
+            return ResponseEntity.getSuccess(null);
+        }else{
+            return ResponseEntity.getFail(null);
+        }
+    }
+
+    /**
+     * 查询角色关联权限根据roleId
+     * 功能描述: 查询角色关联权限根据roleId
+     * @param: Integer roleId;//角色id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    public ResponseEntity queryPermissionByUserId(Integer roleId){
+        if(roleId == null || roleId.intValue() <= 0){
+            return ResponseEntity.getFail("roleId参数为必选!");
+        }
+        //实例化查询条件类
+        RolePermissionExample example = new RolePermissionExample();
+        RolePermissionExample.Criteria criteria = example.createCriteria();
+        criteria.andRoleIdEqualTo(roleId);
+        //执行查询
+        List<RolePermission> list = rolePermissionMapper.selectByExample(example);
+        //返回查询结果
+        return ResponseEntity.getSuccessByListData(null,list);
     }
 
 }

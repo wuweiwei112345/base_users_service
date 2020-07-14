@@ -2,12 +2,12 @@ package com.users.controller;
 
 import com.tools.entity.ResponseEntity;
 import com.tools.mgutil.DateTimeUtil;
-import com.users.bean.request.AddRoleInfoRequestEntity;
-import com.users.bean.request.SelectRoleInfoByConditionRequestEntity;
-import com.users.bean.request.UpdateRoleInfoByIdRequestEntity;
+import com.users.bean.request.*;
 import com.users.common.RedisDisLocksCommon;
 import com.users.dao.po.Role;
 import com.users.dao.po.RoleExample;
+import com.users.dao.po.RolePermission;
+import com.users.dao.po.RolePermissionExample;
 import com.users.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -106,6 +106,47 @@ public class RoleController {
     @RequestMapping(value = "/deleteroleinfobyid",method = RequestMethod.POST)
     public ResponseEntity deleteRoleInfoById(@RequestParam(value = "roleId") Integer roleId){
         return roleService.deleteRoleInfoById(roleId);
+    }
+
+    /**
+     * 设置角色权限之间的关系
+     * 功能描述: 设置角色权限之间的关系
+     * @param: Integer roleId;//角色id
+     * @param: Integer permissionId;//权限id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    @RequestMapping(value = "/setrolepermission",method = RequestMethod.POST)
+    public ResponseEntity setRolePermission(SetRolePermissionRequestEntity entity){
+        return roleService.setRolePermission(entity);
+    }
+
+    /**
+     * 解除角色权限之间的关系
+     * 功能描述: 解除角色权限之间的关系
+     * @param: Integer roleId;//角色id
+     * @param: Integer permissionId;//权限id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    @RequestMapping(value = "/deleterolepermission",method = RequestMethod.POST)
+    public ResponseEntity deleteRolePermission(DeleteRolePermissionRequestEntity entity){
+        return roleService.deleteRolePermission(entity);
+    }
+
+    /**
+     * 查询角色关联权限根据roleId
+     * 功能描述: 查询角色关联权限根据roleId
+     * @param: Integer roleId;//角色id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    @RequestMapping(value = "/querypermissionbyuserid",method = RequestMethod.POST)
+    public ResponseEntity queryPermissionByUserId(@RequestParam(value = "roleId") Integer roleId){
+        return roleService.queryPermissionByUserId(roleId);
     }
 
 }

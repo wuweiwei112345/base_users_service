@@ -1,9 +1,7 @@
 package com.users.client;
 
 import com.tools.entity.ResponseEntity;
-import com.users.bean.request.AddRoleInfoRequestEntity;
-import com.users.bean.request.SelectRoleInfoByConditionRequestEntity;
-import com.users.bean.request.UpdateRoleInfoByIdRequestEntity;
+import com.users.bean.request.*;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -72,5 +70,40 @@ public interface RoleClient {
      */
     @RequestMapping(value = "/deleteroleinfobyid",method = RequestMethod.POST)
     public ResponseEntity deleteRoleInfoById(@RequestParam(value = "roleId") Integer roleId);
+
+    /**
+     * 设置角色权限之间的关系
+     * 功能描述: 设置角色权限之间的关系
+     * @param: Integer roleId;//角色id
+     * @param: Integer permissionId;//权限id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    @RequestMapping(value = "/setrolepermission",method = RequestMethod.POST)
+    public ResponseEntity setRolePermission(SetRolePermissionRequestEntity entity);
+
+    /**
+     * 解除角色权限之间的关系
+     * 功能描述: 解除角色权限之间的关系
+     * @param: Integer roleId;//角色id
+     * @param: Integer permissionId;//权限id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    @RequestMapping(value = "/deleterolepermission",method = RequestMethod.POST)
+    public ResponseEntity deleteRolePermission(DeleteRolePermissionRequestEntity entity);
+
+    /**
+     * 查询角色关联权限根据roleId
+     * 功能描述: 查询角色关联权限根据roleId
+     * @param: Integer roleId;//角色id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    @RequestMapping(value = "/querypermissionbyuserid",method = RequestMethod.POST)
+    public ResponseEntity queryPermissionByUserId(@RequestParam(value = "roleId") Integer roleId);
 
 }
