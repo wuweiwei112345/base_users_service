@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @Auther: wuwei
  * @Date: 2020/6/29 16:06
- * @Description:文件相关权限控制器类
+ * @Description: 文件相关权限控制器类
  */
 @RestController
 @RequestMapping("/file")
