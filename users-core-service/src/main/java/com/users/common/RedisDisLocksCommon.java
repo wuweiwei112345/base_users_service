@@ -1,5 +1,7 @@
 package com.users.common;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +13,8 @@ import java.util.concurrent.TimeUnit;
  * @Description:redis分布式锁工具类
  */
 public class RedisDisLocksCommon {
+
+    private static final Logger logger = LoggerFactory.getLogger(RedisDisLocksCommon.class);
 
     private StringRedisTemplate template;
     private String keyValue;
@@ -79,23 +83,24 @@ public class RedisDisLocksCommon {
                 if(!bool){
                     //尝试次数==0则直接返回失败(为0表示没有再次尝试的机会,直接返回失败即可)
                     if(retryNum == 0){
+                        logger.info(keyValue + " 加锁失败,尝试次数用完,返回false!");
                         return false;
                     }
                     //如果没获取到锁则睡眠1秒
-                    System.out.println(keyValue + "加锁失败.开始睡眠!");
+                    logger.info(keyValue + " 加锁失败,开始睡眠!");
                     Thread.sleep(sleepTime);//睡眠
                     continue;
                 }else{
-                    System.out.println(keyValue + "加锁成功!");
+                    logger.info(keyValue + " 加锁成功!");
                     //为锁设置过期时间
                     template.expire(keyValue,expireTime,TimeUnit.MILLISECONDS);
                     return true;
                 }
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.info(keyValue + " 加锁失败,出现异常!",e);
         }
-        System.out.println(keyValue + "加锁失败!");
+        logger.info(keyValue + " 加锁失败!");
         return false;
     }
 
