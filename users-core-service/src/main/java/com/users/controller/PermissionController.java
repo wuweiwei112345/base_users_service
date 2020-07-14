@@ -46,7 +46,19 @@ public class PermissionController {
 
     @RequestMapping(value = "/addpermission",method = RequestMethod.POST)
     public ResponseEntity addPermission(AddPermissionRequestEntity entity){
-        return permissionService.addPermission(entity);
+        //实例化锁工具类
+        RedisDisLocksCommon redisDisLocksCommon = new RedisDisLocksCommon(template,entity.getPermissionKey());
+        //尝试获取锁
+        boolean bool = redisDisLocksCommon.getLock();
+        //准备返回结果
+        ResponseEntity responseEntity = ResponseEntity.getFail("失败!");
+        if(bool){
+            //执行业务逻辑方法
+            responseEntity = permissionService.addPermission(entity);
+            //取消锁
+            redisDisLocksCommon.cancelLock();
+        }
+        return responseEntity;
     }
 
     @RequestMapping(value = "/querypermissionbycondition",method = RequestMethod.POST)

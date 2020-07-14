@@ -5,10 +5,12 @@ import com.tools.mgutil.DateTimeUtil;
 import com.users.bean.request.AddRoleInfoRequestEntity;
 import com.users.bean.request.SelectRoleInfoByConditionRequestEntity;
 import com.users.bean.request.UpdateRoleInfoByIdRequestEntity;
+import com.users.common.RedisDisLocksCommon;
 import com.users.dao.po.Role;
 import com.users.dao.po.RoleExample;
 import com.users.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +30,8 @@ public class RoleController {
 
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private StringRedisTemplate template;
 
     /**
      * 添加角色信息
@@ -40,7 +44,19 @@ public class RoleController {
      */
     @RequestMapping(value = "/addroleinfo",method = RequestMethod.POST)
     public ResponseEntity addRoleInfo(AddRoleInfoRequestEntity entity){
-        return roleService.addRoleInfo(entity);
+        //实例化锁工具类
+        RedisDisLocksCommon redisDisLocksCommon = new RedisDisLocksCommon(template,entity.getRoleName());
+        //尝试获取锁
+        boolean bool = redisDisLocksCommon.getLock();
+        //准备返回结果
+        ResponseEntity responseEntity = ResponseEntity.getFail("失败!");
+        if(bool){
+            //执行业务逻辑方法
+            responseEntity = roleService.addRoleInfo(entity);
+            //取消锁
+            redisDisLocksCommon.cancelLock();
+        }
+        return responseEntity;
     }
 
     /**

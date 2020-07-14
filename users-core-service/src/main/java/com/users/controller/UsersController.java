@@ -5,8 +5,10 @@ import com.users.bean.request.LoginRequestEntity;
 import com.users.bean.request.RegisterUserInfoRequestEntity;
 import com.users.bean.request.SelectUsersListByConditionRequestEntity;
 import com.users.bean.request.UpdateUserInfoByIdRequestEntity;
+import com.users.common.RedisDisLocksCommon;
 import com.users.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +25,8 @@ public class UsersController {
 
     @Autowired
     private UsersService usersService;
+    @Autowired
+    private StringRedisTemplate template;
 
     /**
      * 注册用户信息
@@ -36,7 +40,19 @@ public class UsersController {
      */
     @RequestMapping(value = "/registeruserinfo",method = RequestMethod.POST)
     public ResponseEntity registerUserInfo(RegisterUserInfoRequestEntity entity){
-        return usersService.registerUserInfo(entity);
+        //实例化锁工具类
+        RedisDisLocksCommon redisDisLocksCommon = new RedisDisLocksCommon(template,entity.getUserName());
+        //尝试获取锁
+        boolean bool = redisDisLocksCommon.getLock();
+        //准备返回结果
+        ResponseEntity responseEntity = ResponseEntity.getFail("失败!");
+        if(bool){
+            //执行业务逻辑方法
+            responseEntity = usersService.registerUserInfo(entity);
+            //取消锁
+            redisDisLocksCommon.cancelLock();
+        }
+        return responseEntity;
     }
 
     /**
