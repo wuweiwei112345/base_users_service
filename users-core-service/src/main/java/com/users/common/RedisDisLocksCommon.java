@@ -75,6 +75,7 @@ public class RedisDisLocksCommon {
                 boolean bool = template.opsForValue().setIfAbsent(keyValue,"1");
                 //尝试获取锁次数递减1
                 retryNum--;
+                //判断是否获取到锁
                 if(!bool){
                     //尝试次数==0则直接返回失败(为0表示没有再次尝试的机会,直接返回失败即可)
                     if(retryNum == 0){
