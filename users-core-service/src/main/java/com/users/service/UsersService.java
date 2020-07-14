@@ -403,4 +403,27 @@ public class UsersService {
         }
     }
 
+    /**
+     * 查询用户角色根据userId
+     * 功能描述: 查询用户角色根据userId
+     * @param: Integer userId;//用户id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    public ResponseEntity queryUserRoleByUserId(Integer userId){
+        //参数
+        if(userId == null || userId.intValue() <= 0){
+            return ResponseEntity.getFail("userId参数为必选!");
+        }
+        //组装查询条件实体
+        UserRoleExample example = new UserRoleExample();
+        UserRoleExample.Criteria criteria = example.createCriteria();
+        criteria.andUserIdEqualTo(userId);
+        //执行添加
+        List<UserRole> list = userRoleMapper.selectByExample(example);
+        //返回查询结果
+        return ResponseEntity.getSuccessByListData(null,list);
+    }
+
 }

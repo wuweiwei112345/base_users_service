@@ -184,4 +184,17 @@ public class UsersController {
         return usersService.deleteUserRole(entity);
     }
 
+    /**
+     * 查询用户角色根据userId
+     * 功能描述: 查询用户角色根据userId
+     * @param: Integer userId;//用户id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    @RequestMapping(value = "/queryuserrolebyuserid",method = RequestMethod.POST)
+    public ResponseEntity queryUserRoleByUserId(@RequestParam(value = "userId") Integer userId){
+        return usersService.queryUserRoleByUserId(userId);
+    }
+
 }

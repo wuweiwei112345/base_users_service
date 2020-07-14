@@ -1,10 +1,7 @@
 package com.users.client;
 
 import com.tools.entity.ResponseEntity;
-import com.users.bean.request.LoginRequestEntity;
-import com.users.bean.request.RegisterUserInfoRequestEntity;
-import com.users.bean.request.SelectUsersListByConditionRequestEntity;
-import com.users.bean.request.UpdateUserInfoByIdRequestEntity;
+import com.users.bean.request.*;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -120,5 +117,40 @@ public interface UsersClient {
      */
     @RequestMapping(value = "/selectuserslistbycondition",method = RequestMethod.POST)
     public ResponseEntity selectUsersListByCondition(SelectUsersListByConditionRequestEntity entity);
+
+    /**
+     * 设置用户角色之间的关系
+     * 功能描述: 设置用户角色之间的关系
+     * @param: Integer userId;//用户id
+     * @param: Integer roleId;//角色id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    @RequestMapping(value = "/setuserrole",method = RequestMethod.POST)
+    public ResponseEntity setUserRole(SetUserRoleRequestEntity entity);
+
+    /**
+     * 解除用户角色之间的关系
+     * 功能描述: 解除用户角色之间的关系
+     * @param: Integer userId;//用户id
+     * @param: Integer roleId;//角色id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    @RequestMapping(value = "/deleteuserrole",method = RequestMethod.POST)
+    public ResponseEntity deleteUserRole(DeleteUserRoleRequestEntity entity);
+
+    /**
+     * 查询用户角色根据userId
+     * 功能描述: 查询用户角色根据userId
+     * @param: Integer userId;//用户id
+     * @return: 返回统一响应实体
+     * @auther: wuwei
+     * @date: 2020/7/14 16:03
+     */
+    @RequestMapping(value = "/queryuserrolebyuserid",method = RequestMethod.POST)
+    public ResponseEntity queryUserRoleByUserId(@RequestParam(value = "userId") Integer userId);
 
 }
