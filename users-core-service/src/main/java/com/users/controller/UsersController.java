@@ -167,7 +167,19 @@ public class UsersController {
      */
     @RequestMapping(value = "/setuserrole",method = RequestMethod.POST)
     public ResponseEntity setUserRole(SetUserRoleRequestEntity entity){
-        return usersService.setUserRole(entity);
+        //实例化锁工具类
+        RedisDisLocksCommon redisDisLocksCommon = new RedisDisLocksCommon(template,String.valueOf(entity.getRoleId() + entity.getUserId()));
+        //尝试获取锁
+        boolean bool = redisDisLocksCommon.getLock();
+        //准备返回结果
+        ResponseEntity responseEntity = ResponseEntity.getFail("失败!");
+        if(bool){
+            //执行业务逻辑方法
+            responseEntity = usersService.setUserRole(entity);
+            //取消锁
+            redisDisLocksCommon.cancelLock();
+        }
+        return responseEntity;
     }
 
     /**

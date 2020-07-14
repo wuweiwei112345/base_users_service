@@ -119,7 +119,19 @@ public class RoleController {
      */
     @RequestMapping(value = "/setrolepermission",method = RequestMethod.POST)
     public ResponseEntity setRolePermission(SetRolePermissionRequestEntity entity){
-        return roleService.setRolePermission(entity);
+        //实例化锁工具类
+        RedisDisLocksCommon redisDisLocksCommon = new RedisDisLocksCommon(template,String.valueOf(entity.getRoleId() + entity.getPermissionId()));
+        //尝试获取锁
+        boolean bool = redisDisLocksCommon.getLock();
+        //准备返回结果
+        ResponseEntity responseEntity = ResponseEntity.getFail("失败!");
+        if(bool){
+            //执行业务逻辑方法
+            responseEntity = roleService.setRolePermission(entity);
+            //取消锁
+            redisDisLocksCommon.cancelLock();
+        }
+        return responseEntity;
     }
 
     /**
