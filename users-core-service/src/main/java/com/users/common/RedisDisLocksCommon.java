@@ -13,6 +13,7 @@ public class RedisDisLocksCommon {
     private StringRedisTemplate template;
     private String keyValue;
     private Integer retryNum = 3;//默认尝试次数3
+    private Long sleepTime = 1000L;//获取锁失败睡眠时间(毫秒)
 
     private final static String KEY_TEMPLE = "redis.dis.lock:{value}";
 
@@ -46,6 +47,23 @@ public class RedisDisLocksCommon {
         }
     }
 
+    public RedisDisLocksCommon(StringRedisTemplate template,String value,Long sleepTime){
+        this(template,value);
+        if(sleepTime != null && sleepTime.longValue() > 0){
+            this.sleepTime = sleepTime;
+        }
+    }
+
+    public RedisDisLocksCommon(StringRedisTemplate template,String value,Integer retryNum,Long sleepTime){
+        this(template,value);
+        if(retryNum != null && retryNum.intValue() > 0){
+            this.retryNum = retryNum;
+        }
+        if(sleepTime != null && sleepTime.longValue() > 0){
+            this.sleepTime = sleepTime;
+        }
+    }
+
     public boolean getLock(){
         try {
             //循环方法获取锁
@@ -61,7 +79,7 @@ public class RedisDisLocksCommon {
                     }
                     //如果没获取到锁则睡眠1秒
                     System.out.println(keyValue + "加锁失败.开始睡眠!");
-                    Thread.sleep(1000L);
+                    Thread.sleep(sleepTime);//睡眠
                     continue;
                 }else{
                     System.out.println(keyValue + "加锁成功!");
